@@ -1,68 +1,96 @@
 // ignore_for_file: prefer_const_constructors, file_names
+import 'package:eco_bin_original/Landing_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const LoadingPage());
+  runApp(const MyApp());
 }
 
-class LoadingPage extends StatelessWidget {
-  const LoadingPage({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "ECOBIN",
-      home: Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/unsplash_OdBFUurPHjo.jpg'),
-                  fit: BoxFit.cover,
+      title: 'ECOBIN',
+      home: const LoadingPage(),
+    );
+  }
+}
+
+class LoadingPage extends StatefulWidget {
+  const LoadingPage({super.key});
+
+  @override
+  _LoadingPageState createState() => _LoadingPageState();
+}
+
+class _LoadingPageState extends State<LoadingPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 7000), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LandingPage(),
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/unsplash_OdBFUurPHjo.jpg'),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Align(
+            alignment: FractionalOffset.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: Text(
+                "Powered by ECOBIN",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24.0,
+                  fontFamily: 'Jaro',
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-            Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: Text(
-                  "Powered by ECOBIN",
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/recycle.png',
+                  width: 250.0,
+                  height: 250.0,
+                ),
+                const SizedBox(height: 10.0),
+                Text(
+                  "Garbage Management System",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Karma',
-                    fontFamilyFallback: const <String>['Karma'],
+                    fontSize: 26.0,
+                    fontFamily: 'RobotoSlab-Black',
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
-              ),
+              ],
             ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/recycle.png',
-                    width: 250.0,
-                    height: 250.0,
-                  ),
-                  const SizedBox(height: 10.0),
-                  Text(
-                    "Garbage Management System",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
