@@ -1,5 +1,3 @@
-// ignore_for_file: file_names
-
 import 'package:eco_bin_original/Login.dart';
 import 'package:flutter/material.dart';
 import 'Sign_up.dart'; // Import the SignUp page
@@ -37,9 +35,10 @@ class LandingPage extends StatelessWidget {
             child: Text(
               "ECOBIN",
               style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.w900,
                 color: Color.fromARGB(255, 9, 94, 2),
+                fontSize: 55,
+                fontFamily: 'Jaro',
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -48,24 +47,26 @@ class LandingPage extends StatelessWidget {
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 50.0, right: 150),
+                padding: EdgeInsets.only(top: 50.0, right: 140),
                 child: Text(
                   "The Most\nComprehensive ",
                   style: TextStyle(
                     color: Color.fromARGB(255, 77, 89, 99),
-                    fontSize: 26,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 28,
+                    fontFamily: 'RobotoSlab-SemiBold',
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(top: 15, left: 15.0, right: 120),
+                padding: EdgeInsets.only(top: 15, left: 15.0, right: 100),
                 child: Text(
                   "Waste Management \nPlatform",
                   style: TextStyle(
                     color: Color.fromARGB(255, 50, 199, 55),
-                    fontSize: 26,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 28,
+                    fontFamily: 'RobotoSlab-SemiBold',
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
               ),
@@ -110,7 +111,8 @@ class LandingPage extends StatelessWidget {
                       "Join Us Now",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 22,
+                        fontSize: 24,
+                        fontFamily: 'RobotoSlab-Black',
                         fontWeight: FontWeight.w900,
                       ),
                     ),
@@ -118,16 +120,18 @@ class LandingPage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 55),
+                padding: const EdgeInsets.only(right: 30),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
                       "Already have an account? ",
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontFamily: 'RobotoSlab-Bold',
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                     TextButton(
                       onPressed: () {
@@ -158,7 +162,8 @@ class LandingPage extends StatelessWidget {
                         "Log In",
                         style: TextStyle(
                           color: Color.fromARGB(255, 50, 199, 55),
-                          fontSize: 18,
+                          fontSize: 20,
+                          fontFamily: 'RobotoSlab-Bold',
                           fontWeight: FontWeight.w900,
                         ),
                       ),
