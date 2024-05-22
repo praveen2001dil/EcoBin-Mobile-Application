@@ -59,7 +59,7 @@ class _OTPState extends State<OTP> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
@@ -68,13 +68,26 @@ class _OTPState extends State<OTP> {
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly // Accept only digits
                   ],
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'OTP',
                     hintText: 'Enter Your OTP here',
-                    border: UnderlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      ),
+                    ),
+                    prefixIcon: const Icon(Icons.lock),
                     prefixIconColor: Colors.green,
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 20,
                       fontFamily: 'RobotoSlab-Bold',
                       fontWeight: FontWeight.w900,
