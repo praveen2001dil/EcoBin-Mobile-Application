@@ -66,7 +66,20 @@ class _SignUpState extends State<SignUp> {
                           fontWeight: FontWeight.w900,
                           color: Color.fromARGB(255, 3, 80, 5),
                         ),
-                        border: UnderlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(
+                            color: Colors.green,
+                            width: 2,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(
+                            color: Colors.green,
+                            width: 2,
+                          ),
+                        ),
                         prefixIcon: Icon(Icons.person),
                         prefixIconColor: Colors.green,
                       ),
@@ -82,7 +95,20 @@ class _SignUpState extends State<SignUp> {
                           fontWeight: FontWeight.w900,
                           color: Color.fromARGB(255, 3, 80, 5),
                         ),
-                        border: UnderlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(
+                            color: Colors.green,
+                            width: 2,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(
+                            color: Colors.green,
+                            width: 2,
+                          ),
+                        ),
                         prefixIcon: Icon(Icons.message_sharp),
                         prefixIconColor: Colors.green,
                       ),
@@ -98,17 +124,30 @@ class _SignUpState extends State<SignUp> {
                           fontWeight: FontWeight.w900,
                           color: Color.fromARGB(255, 3, 80, 5),
                         ),
-                        border: UnderlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(
+                            color: Colors.green,
+                            width: 2,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide: const BorderSide(
+                            color: Colors.green,
+                            width: 2,
+                          ),
+                        ),
                         prefixIcon: Icon(Icons.phone),
                         prefixIconColor: Colors.green,
                       ),
                       maxLength: 10,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 5, top: 30),
+                      padding: const EdgeInsets.only(right: 5, top: 20),
                       child: Container(
                         height: 54,
-                        width: 350,
+                        width: 370,
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 14, 219, 21),
                           borderRadius: BorderRadius.circular(10),
