@@ -35,7 +35,6 @@ class _SetPasswordState extends State<SetPassword> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
@@ -43,6 +42,7 @@ class _SetPasswordState extends State<SetPassword> {
                   style: TextStyle(
                     color: Color.fromARGB(255, 50, 199, 55),
                     fontSize: 28,
+                    fontFamily: 'RobotoSlab-Bold',
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -53,19 +53,34 @@ class _SetPasswordState extends State<SetPassword> {
                 child: Text(
                   "Set your account password. Nothing hard for you to forget :)",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600),
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontFamily: 'RobotoSlab-Bold',
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Enter Your Password here',
-                    border: const UnderlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 50, 199, 55),
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Color.fromARGB(255, 50, 199, 55),
+                        width: 2,
+                      ),
+                    ),
                     prefixIcon: const Icon(Icons.lock),
                     prefixIconColor: Colors.green,
                     suffixIcon: GestureDetector(
@@ -83,21 +98,42 @@ class _SetPasswordState extends State<SetPassword> {
                     ),
                     labelStyle: const TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                      fontFamily: 'RobotoSlab-Bold',
+                      fontWeight: FontWeight.w900,
                       color: Color.fromARGB(255, 3, 80, 5),
                     ),
                   ),
                   obscureText: _obscurePassword,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
                     hintText: 'Enter Your Password here',
-                    border: const UnderlineInputBorder(),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      ),
+                    ),
                     prefixIcon: const Icon(Icons.lock),
                     prefixIconColor: Colors.green,
                     suffixIcon: GestureDetector(
@@ -115,14 +151,15 @@ class _SetPasswordState extends State<SetPassword> {
                     ),
                     labelStyle: const TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                      fontFamily: 'RobotoSlab-Bold',
+                      fontWeight: FontWeight.w900,
                       color: Color.fromARGB(255, 3, 80, 5),
                     ),
                   ),
                   obscureText: _obscureConfirmPassword,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 5),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 30),
                 child: Container(
@@ -162,6 +199,7 @@ class _SetPasswordState extends State<SetPassword> {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,
+                        fontFamily: 'RobotoSlab-Bold',
                         fontWeight: FontWeight.w900,
                       ),
                     ),
