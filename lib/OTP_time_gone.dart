@@ -41,6 +41,7 @@ class _OTPTimeGoneState extends State<OTPTimeGone> {
                   style: TextStyle(
                     color: Color.fromARGB(255, 50, 199, 55),
                     fontSize: 28,
+                    fontFamily: 'RobotoSlab-Bold',
                     fontWeight: FontWeight.w900,
                   ),
                 ),
@@ -51,9 +52,11 @@ class _OTPTimeGoneState extends State<OTPTimeGone> {
                 child: Text(
                   "A 6 digit code has been sent to \nokematilanray@gmail.com",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600),
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontFamily: 'RobotoSlab-Bold',
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -65,21 +68,34 @@ class _OTPTimeGoneState extends State<OTPTimeGone> {
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly // Accept only digits
                   ],
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'OTP',
                     hintText: 'Enter Your OTP here',
-                    border: UnderlineInputBorder(),
-                    prefixIcon: Icon(Icons.lock),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      ),
+                    ),
+                    prefixIcon: const Icon(Icons.lock),
                     prefixIconColor: Colors.green,
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                      fontFamily: 'RobotoSlab-Bold',
+                      fontWeight: FontWeight.w900,
                       color: Color.fromARGB(255, 3, 80, 5),
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: Row(
@@ -88,9 +104,11 @@ class _OTPTimeGoneState extends State<OTPTimeGone> {
                     const Text(
                       "Haven't gotten code yet? ",
                       style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontFamily: 'RobotoSlab-Bold',
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                     TextButton(
                       onPressed: () {
@@ -101,6 +119,7 @@ class _OTPTimeGoneState extends State<OTPTimeGone> {
                         style: TextStyle(
                           color: Color.fromARGB(255, 50, 199, 55),
                           fontSize: 18,
+                          fontFamily: 'RobotoSlab-Bold',
                           fontWeight: FontWeight.w900,
                         ),
                       ),
@@ -109,7 +128,7 @@ class _OTPTimeGoneState extends State<OTPTimeGone> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20, top: 30),
+                padding: const EdgeInsets.only(left: 20, top: 20),
                 child: Container(
                   height: 54,
                   width: 370,
@@ -147,6 +166,7 @@ class _OTPTimeGoneState extends State<OTPTimeGone> {
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 22,
+                        fontFamily: 'RobotoSlab-Bold',
                         fontWeight: FontWeight.w900,
                       ),
                     ),
