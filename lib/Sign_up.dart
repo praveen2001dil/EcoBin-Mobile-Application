@@ -57,10 +57,10 @@ class _SignUpState extends State<SignUp> {
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'UserName',
                         hintText: 'Enter Your UserName',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontSize: 20,
                           fontFamily: 'RobotoSlab-Bold',
                           fontWeight: FontWeight.w900,
@@ -80,16 +80,16 @@ class _SignUpState extends State<SignUp> {
                             width: 2,
                           ),
                         ),
-                        prefixIcon: Icon(Icons.person),
+                        prefixIcon: const Icon(Icons.person),
                         prefixIconColor: Colors.green,
                       ),
                       maxLength: 10,
                     ),
                     TextFormField(
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Email',
                         hintText: 'Enter Your Email',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontSize: 20,
                           fontFamily: 'RobotoSlab-Bold',
                           fontWeight: FontWeight.w900,
@@ -109,16 +109,16 @@ class _SignUpState extends State<SignUp> {
                             width: 2,
                           ),
                         ),
-                        prefixIcon: Icon(Icons.message_sharp),
+                        prefixIcon: const Icon(Icons.message_sharp),
                         prefixIconColor: Colors.green,
                       ),
                       maxLength: 20,
                     ),
                     TextFormField(
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: 'Contact No',
                         hintText: 'Enter Your Contact Number',
-                        labelStyle: TextStyle(
+                        labelStyle: const TextStyle(
                           fontSize: 20,
                           fontFamily: 'RobotoSlab-Bold',
                           fontWeight: FontWeight.w900,
@@ -138,13 +138,13 @@ class _SignUpState extends State<SignUp> {
                             width: 2,
                           ),
                         ),
-                        prefixIcon: Icon(Icons.phone),
+                        prefixIcon: const Icon(Icons.phone),
                         prefixIconColor: Colors.green,
                       ),
                       maxLength: 10,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 5, top: 20),
+                      padding: const EdgeInsets.only(left: 5, top: 20),
                       child: Container(
                         height: 54,
                         width: 370,
