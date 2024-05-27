@@ -15,16 +15,23 @@ class FirstPageAfterLogin extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: const Center(
+          title: const Padding(
+            padding: EdgeInsets.only(left: 70),
             child: Text(
               "ECOBIN",
               style: TextStyle(
-                color: Color.fromARGB(255, 9, 94, 2),
                 fontSize: 55,
                 fontFamily: 'Jaro',
                 fontWeight: FontWeight.w700,
+                color: Color.fromARGB(255, 9, 94, 2),
               ),
             ),
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
         ),
         body: SingleChildScrollView(
