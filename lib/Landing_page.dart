@@ -1,6 +1,7 @@
 import 'package:eco_bin_original/Login.dart';
 import 'package:flutter/material.dart';
-import 'Sign_up.dart'; // Import the SignUp page
+import 'Sign_up.dart';
+// Import the SignUp page
 
 void main() {
   runApp(const MyApp());
