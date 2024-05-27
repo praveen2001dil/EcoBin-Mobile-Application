@@ -33,7 +33,6 @@ class _OTPTimeGoneState extends State<OTPTimeGone> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
