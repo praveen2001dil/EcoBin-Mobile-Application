@@ -18,33 +18,6 @@ class GarbageshowingMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Set<Marker> markers = {
-      Marker(
-        markerId: MarkerId("_garbageLocation1"),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        position: _GarbageLocation1,
-        onTap: () {
-          _showGarbageBinsInfo(context, 'Garbage Location 1');
-        },
-      ),
-      Marker(
-        markerId: MarkerId("_garbageLocation2"),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        position: _GarbageLocation2,
-        onTap: () {
-          _showGarbageBinsInfo(context, 'Garbage Location 2');
-        },
-      ),
-      Marker(
-        markerId: MarkerId("_garbageLocation3"),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        position: _GarbageLocation3,
-        onTap: () {
-          _showGarbageBinsInfo(context, 'Garbage Location 3');
-        },
-      ),
-    };
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Map',
@@ -73,13 +46,101 @@ class GarbageshowingMap extends StatelessWidget {
         ),
         body: GoogleMap(
           initialCameraPosition: CameraPosition(target: _pGooglePlex, zoom: 13),
-          markers: markers,
+          markers: _createMarkers(context),
         ),
       ),
     );
   }
 
-  void _showGarbageBinsInfo(BuildContext context, String locationName) {
+  Set<Marker> _createMarkers(BuildContext context) {
+    return {
+      Marker(
+        markerId: MarkerId("_garbageLocation1"),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        position: _GarbageLocation1,
+        onTap: () {
+          _showGarbageBinsInfo(
+            context,
+            'Garbage Location 1',
+            'Paper',
+            0.95,
+            Colors.red,
+            'Glass',
+            0.50,
+            Colors.blue,
+            'Organic',
+            0.25,
+            Colors.green,
+            'Plastic',
+            0.10,
+            Color.fromARGB(255, 255, 230, 7),
+          );
+        },
+      ),
+      Marker(
+        markerId: MarkerId("_garbageLocation2"),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        position: _GarbageLocation2,
+        onTap: () {
+          _showGarbageBinsInfo(
+            context,
+            'Garbage Location 2',
+            'Paper',
+            0.85,
+            Colors.red,
+            'Glass',
+            0.60,
+            Colors.blue,
+            'Organic',
+            0.30,
+            Colors.green,
+            'Plastic',
+            0.15,
+            Color.fromARGB(255, 255, 230, 7),
+          );
+        },
+      ),
+      Marker(
+        markerId: MarkerId("_garbageLocation3"),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        position: _GarbageLocation3,
+        onTap: () {
+          _showGarbageBinsInfo(
+            context,
+            'Garbage Location 3',
+            'Paper',
+            0.70,
+            Colors.red,
+            'Glass',
+            0.40,
+            Colors.blue,
+            'Organic',
+            0.20,
+            Colors.green,
+            'Plastic',
+            0.05,
+            Color.fromARGB(255, 255, 230, 7),
+          );
+        },
+      ),
+    };
+  }
+
+  void _showGarbageBinsInfo(
+      BuildContext context,
+      String locationName,
+      String bin1Name,
+      double bin1Level,
+      Color bin1Color,
+      String bin2Name,
+      double bin2Level,
+      Color bin2Color,
+      String bin3Name,
+      double bin3Level,
+      Color bin3Color,
+      String bin4Name,
+      double bin4Level,
+      Color bin4Color) {
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -98,11 +159,10 @@ class GarbageshowingMap extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              _buildGarbageBinInfo('Paper', 0.95, Colors.red),
-              _buildGarbageBinInfo('Glass', 0.50, Colors.blue),
-              _buildGarbageBinInfo('Organic', 0.25, Colors.green),
-              _buildGarbageBinInfo(
-                  'Plastic', 0.10, Color.fromARGB(255, 255, 230, 7)),
+              _buildGarbageBinInfo(bin1Name, bin1Level, bin1Color),
+              _buildGarbageBinInfo(bin2Name, bin2Level, bin2Color),
+              _buildGarbageBinInfo(bin3Name, bin3Level, bin3Color),
+              _buildGarbageBinInfo(bin4Name, bin4Level, bin4Color),
             ],
           ),
         );
