@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "142060759528",
+    "project_id": "ecobin-f6ee3",
+    "storage_bucket": "ecobin-f6ee3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142060759528:android:eebd185ef7b79654571c5d",
+        "android_client_info": {
+          "package_name": "com.example.eco_bin_original"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWq9fQqDGa0PjW7t8-taMl8PTxYHt8BUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
