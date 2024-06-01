@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:eco_bin_original/Location_add_page.dart';
 import 'package:flutter/material.dart';
 
