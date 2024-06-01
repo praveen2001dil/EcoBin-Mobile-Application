@@ -73,7 +73,7 @@ class GarbageshowingMap extends StatelessWidget {
             Colors.green,
             'Plastic',
             0.10,
-            Color.fromARGB(255, 255, 230, 7),
+            Color.fromARGB(255, 255, 15, 7),
           );
         },
       ),
