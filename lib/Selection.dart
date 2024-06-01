@@ -41,66 +41,93 @@ class Selection extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 40),
+                SizedBox(height: 25),
                 Padding(
                   padding: EdgeInsets.only(left: 25),
                   child: Text(
-                    "WHO ARE YOU",
+                    "WHO ARE YOU??",
                     style: TextStyle(
-                      fontSize: 28,
+                      fontSize: 40,
                       fontFamily: 'RobotoSlab-Bold',
                       fontWeight: FontWeight.w900,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 50, 199, 55),
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Text(
                     "What kind of person are you joining us?",
                     style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'RobotoSlab-Regular',
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black,
-                    ),
-                    textAlign: TextAlign.center,
+                        fontSize: 24,
+                        fontFamily: 'RobotoSlab-Bold',
+                        fontWeight: FontWeight.w900,
+                        color: Colors.black),
                   ),
                 ),
-                SizedBox(height: 50),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) =>
-                            const SignUp(),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          const begin = Offset(1.0, 0.0);
-                          const end = Offset.zero;
-                          const curve = Curves.ease;
-
-                          var tween = Tween(begin: begin, end: end)
-                              .chain(CurveTween(curve: curve));
-
-                          return SlideTransition(
-                            position: animation.drive(tween),
-                            child: child,
-                          );
-                        },
+                SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignUp()),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 70,
+                            backgroundImage:
+                                AssetImage('assets/useravatar1.png'),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "User",
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontFamily: 'RobotoSlab-Bold',
+                                fontWeight: FontWeight.w900,
+                                color: Colors.black),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                  child: Text(
-                    "Proceed",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'RobotoSlab-Regular',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
                     ),
+                    GestureDetector(
+                      onTap: () {
+                        // Handle Admin tap
+                      },
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 70,
+                            backgroundImage:
+                                AssetImage('assets/adminavatar.jpg'),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "Admin",
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontFamily: 'RobotoSlab-Bold',
+                                fontWeight: FontWeight.w900,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10, bottom: 10),
+                  child: Image.asset(
+                    'assets/bro.jpg',
+                    width: 400.0,
+                    height: 330.0,
                   ),
                 ),
               ],
