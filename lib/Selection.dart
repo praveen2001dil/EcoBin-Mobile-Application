@@ -1,3 +1,4 @@
+import 'package:eco_bin_original/Sign_up.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -35,7 +36,7 @@ class Selection extends StatelessWidget {
             },
           ),
         ),
-        body: const SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -59,12 +60,47 @@ class Selection extends StatelessWidget {
                   child: Text(
                     "What kind of person are you joining us?",
                     style: TextStyle(
-                      fontSize: 28,
-                      fontFamily: 'RobotoSlab-Bold',
-                      fontWeight: FontWeight.w900,
+                      fontSize: 18,
+                      fontFamily: 'RobotoSlab-Regular',
+                      fontWeight: FontWeight.normal,
                       color: Colors.black,
                     ),
-                    //textAlign: TextAlign.center,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 50),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            const SignUp(),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
+
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+
+                          return SlideTransition(
+                            position: animation.drive(tween),
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Proceed",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'RobotoSlab-Regular',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
+                    ),
                   ),
                 ),
               ],
