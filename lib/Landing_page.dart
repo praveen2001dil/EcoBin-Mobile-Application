@@ -1,6 +1,7 @@
 import 'package:eco_bin_original/Login.dart';
+import 'package:eco_bin_original/Selection.dart';
 import 'package:flutter/material.dart';
-import 'Sign_up.dart';
+
 // Import the SignUp page
 
 void main() {
@@ -90,7 +91,7 @@ class LandingPage extends StatelessWidget {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  const SignUp(),
+                                  const Selection(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             const begin = Offset(1.0, 0.0);
