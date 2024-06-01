@@ -1,4 +1,4 @@
-import 'package:eco_bin_original/Success.dart';
+import 'package:eco_bin_original/Garbage_showing_Map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Importing Services Library for FilteringTextInputFormatter
 
@@ -109,7 +109,7 @@ class _LocationAddPageState extends State<LocationAddPage> {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  const Success(),
+                                  const GarbageshowingMap(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             const begin = Offset(1.0, 0.0);
