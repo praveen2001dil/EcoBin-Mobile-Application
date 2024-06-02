@@ -1,3 +1,4 @@
+import 'package:eco_bin_original/Garbage_showing_Map.dart';
 import 'package:eco_bin_original/Sign_up.dart';
 import 'package:flutter/material.dart';
 
@@ -99,7 +100,11 @@ class Selection extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // Handle Admin tap
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const GarbageshowingMap()),
+                        );
                       },
                       child: Column(
                         children: [
