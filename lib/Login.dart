@@ -1,4 +1,4 @@
-import 'package:eco_bin_original/First_page_after_login.dart';
+import 'package:eco_bin_original/Location_add_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -201,7 +201,7 @@ class _LoginState extends State<Login> {
                                 PageRouteBuilder(
                                   pageBuilder: (context, animation,
                                           secondaryAnimation) =>
-                                      const FirstPageAfterLogin(),
+                                      const LocationAddPage(),
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
                                     const begin = Offset(1.0, 0.0);
