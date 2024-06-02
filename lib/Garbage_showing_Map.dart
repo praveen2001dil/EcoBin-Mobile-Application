@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 
 void main() {
   runApp(const GarbageshowingMap());
 }
 
-class GarbageshowingMap extends StatelessWidget {
+class GarbageshowingMap extends StatefulWidget {
+  const GarbageshowingMap({Key? key}) : super(key: key);
+
+  @override
+  _GarbageshowingMapState createState() => _GarbageshowingMapState();
+}
+
+class _GarbageshowingMapState extends State<GarbageshowingMap> {
   static const LatLng _pGooglePlex =
       LatLng(7.1280940356164715, 79.88128287742241);
   static const LatLng _GarbageLocation1 =
@@ -14,7 +22,32 @@ class GarbageshowingMap extends StatelessWidget {
       LatLng(7.131945323570431, 79.87612478326228);
   static const LatLng _GarbageLocation3 =
       LatLng(7.1284534794369705, 79.87694017478212);
-  const GarbageshowingMap({super.key});
+
+  List<LatLng> polylineCoordinates = [];
+  late PolylinePoints polylinePoints;
+  late GoogleMapController mapController;
+
+  @override
+  void initState() {
+    super.initState();
+    polylinePoints = PolylinePoints();
+    _getPolyline();
+  }
+
+  _getPolyline() async {
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      'AIzaSyC2acu1DRffpyrie614kUIGFCQ-Gpo-u9Q',
+      PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
+      PointLatLng(_GarbageLocation2.latitude, _GarbageLocation2.longitude),
+    );
+
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +80,18 @@ class GarbageshowingMap extends StatelessWidget {
         body: GoogleMap(
           initialCameraPosition: CameraPosition(target: _pGooglePlex, zoom: 13),
           markers: _createMarkers(context),
+          polylines: {
+            Polyline(
+              polylineId: PolylineId('polyline'),
+              visible: true,
+              points: polylineCoordinates,
+              color: Colors.blue,
+              width: 5,
+            ),
+          },
+          onMapCreated: (GoogleMapController controller) {
+            mapController = controller;
+          },
         ),
       ),
     );
@@ -58,6 +103,7 @@ class GarbageshowingMap extends StatelessWidget {
         markerId: MarkerId("_garbageLocation1"),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         position: _GarbageLocation1,
+        infoWindow: const InfoWindow(title: "Garbage Location 1"),
         onTap: () {
           _showGarbageBinsInfo(
             context,
@@ -81,6 +127,7 @@ class GarbageshowingMap extends StatelessWidget {
         markerId: MarkerId("_garbageLocation2"),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         position: _GarbageLocation2,
+        infoWindow: const InfoWindow(title: "Garbage Location 2"),
         onTap: () {
           _showGarbageBinsInfo(
             context,
@@ -104,6 +151,7 @@ class GarbageshowingMap extends StatelessWidget {
         markerId: MarkerId("_garbageLocation3"),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
         position: _GarbageLocation3,
+        infoWindow: const InfoWindow(title: "Garbage Location 3"),
         onTap: () {
           _showGarbageBinsInfo(
             context,
