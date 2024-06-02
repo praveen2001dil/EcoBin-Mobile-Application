@@ -1,4 +1,3 @@
-import 'package:eco_bin_original/Login.dart';
 import 'package:eco_bin_original/Selection.dart';
 import 'package:flutter/material.dart';
 
@@ -142,7 +141,7 @@ class LandingPage extends StatelessWidget {
                           PageRouteBuilder(
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
-                                    const Login(),
+                                    const Selection(),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
                               const begin = Offset(1.0, 0.0);
