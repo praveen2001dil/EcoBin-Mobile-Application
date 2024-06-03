@@ -85,7 +85,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
               polylineId: PolylineId('polyline'),
               visible: true,
               points: polylineCoordinates,
-              color: Colors.blue,
+              color: Colors.black,
               width: 5,
             ),
           },
