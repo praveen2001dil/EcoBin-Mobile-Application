@@ -58,7 +58,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromARGB(255, 183, 228, 197),
           title: const Padding(
             padding: EdgeInsets.only(left: 70, bottom: 15),
             child: Text(
