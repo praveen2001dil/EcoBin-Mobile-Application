@@ -1,3 +1,4 @@
+//import 'package:eco_bin_original/NotificationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -59,7 +60,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: const Padding(
-            padding: EdgeInsets.only(left: 70),
+            padding: EdgeInsets.only(left: 70, bottom: 15),
             child: Text(
               "ECOBIN",
               style: TextStyle(
@@ -76,6 +77,14 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
               Navigator.pop(context);
             },
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications),
+              iconSize: 35,
+              color: Colors.black,
+              onPressed: () {},
+            ),
+          ],
         ),
         body: GoogleMap(
           initialCameraPosition: CameraPosition(target: _pGooglePlex, zoom: 13),
