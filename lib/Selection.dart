@@ -1,4 +1,3 @@
-import 'package:eco_bin_original/Garbage_showing_Map.dart';
 import 'package:eco_bin_original/Sign_up.dart';
 import 'package:eco_bin_original/Login.dart';
 import 'package:flutter/material.dart';
@@ -103,9 +102,8 @@ class Selection extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => isLogin
-                                  ? const Login()
-                                  : const GarbageshowingMap()),
+                              builder: (context) =>
+                                  isLogin ? const Login() : const SignUp()),
                         );
                       },
                       child: Column(
