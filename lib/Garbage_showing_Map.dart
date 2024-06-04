@@ -1,4 +1,4 @@
-//import 'package:eco_bin_original/NotificationPage.dart';
+import 'package:eco_bin_original/NotificationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -82,7 +82,12 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
               icon: const Icon(Icons.notifications),
               iconSize: 35,
               color: Colors.black,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NotificationPage()),
+                );
+              },
             ),
           ],
         ),
