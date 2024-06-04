@@ -13,7 +13,7 @@ class NotificationPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: const Padding(
-            padding: EdgeInsets.only(left: 70),
+            padding: EdgeInsets.only(left: 70, bottom: 15),
             child: Text(
               "ECOBIN",
               style: TextStyle(
