@@ -37,7 +37,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
 
   _getPolyline() async {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyC2acu1DRffpyrie614kUIGFCQ-Gpo-u9Q',
+      'YOUR_API_KEY',
       PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
       PointLatLng(_GarbageLocation2.latitude, _GarbageLocation2.longitude),
     );
@@ -60,7 +60,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 183, 228, 197),
           title: const Padding(
-            padding: EdgeInsets.only(left: 70, bottom: 15),
+            padding: EdgeInsets.only(left: 60, bottom: 15),
             child: Text(
               "ECOBIN",
               style: TextStyle(
@@ -83,9 +83,12 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
               iconSize: 35,
               color: Colors.black,
               onPressed: () {
+                String message = _checkGarbageLevels();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => NotificationPage()),
+                  MaterialPageRoute(
+                    builder: (context) => NotificationPage(message: message),
+                  ),
                 );
               },
             ),
@@ -279,5 +282,41 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
         ],
       ),
     );
+  }
+
+  String _checkGarbageLevels() {
+    // Define the levels for Garbage Locations
+    Map<String, Map<String, double>> garbageLevels = {
+      'Location 1': {
+        'Paper': 0.95,
+        'Glass': 0.50,
+        'Organic': 0.25,
+        'Plastic': 0.10,
+      },
+      'Location 2': {
+        'Paper': 0.85,
+        'Glass': 0.60,
+        'Organic': 0.30,
+        'Plastic': 0.15,
+      },
+      'Location 3': {
+        'Paper': 0.70,
+        'Glass': 0.40,
+        'Organic': 0.20,
+        'Plastic': 0.05,
+      },
+    };
+
+    String message = "All bins are available for use";
+
+    garbageLevels.forEach((location, bins) {
+      bins.forEach((bin, level) {
+        if (level > 0.9) {
+          message = "Don't put any garbage in the $bin bin at $location";
+        }
+      });
+    });
+
+    return message;
   }
 }
