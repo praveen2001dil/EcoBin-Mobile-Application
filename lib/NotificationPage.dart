@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NotificationPage extends StatelessWidget {
-  const NotificationPage({super.key});
+  final String message;
+
+  const NotificationPage({Key? key, required this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class NotificationPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 183, 228, 197),
           title: const Padding(
-            padding: EdgeInsets.only(left: 70, bottom: 15),
+            padding: EdgeInsets.only(left: 60, bottom: 15),
             child: Text(
               "ECOBIN",
               style: TextStyle(
@@ -29,6 +31,18 @@ class NotificationPage extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
+          ),
+        ),
+        body: Center(
+          child: Text(
+            message,
+            style: TextStyle(
+              fontSize: 24,
+              fontFamily: 'Roboto-Bold',
+              color: Colors.black,
+              fontWeight: FontWeight.w900,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),
