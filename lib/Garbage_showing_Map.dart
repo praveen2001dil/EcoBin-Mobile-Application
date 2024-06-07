@@ -28,6 +28,27 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   late PolylinePoints polylinePoints;
   late GoogleMapController mapController;
 
+  final Map<String, Map<String, double>> garbageLevels = {
+    'Garbage Location 1': {
+      'Paper': 0.95,
+      'Glass': 0.50,
+      'Organic': 0.25,
+      'Plastic': 0.10,
+    },
+    'Garbage Location 2': {
+      'Paper': 0.85,
+      'Glass': 0.60,
+      'Organic': 0.95,
+      'Plastic': 0.95,
+    },
+    'Garbage Location 3': {
+      'Paper': 0.70,
+      'Glass': 0.40,
+      'Organic': 0.95,
+      'Plastic': 0.95,
+    },
+  };
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +58,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
 
   _getPolyline() async {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'YOUR_API_KEY',
+      'AIzaSyBDlOfF8apqSfWypgNFfNEW_QXAqH5zkuM',
       PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
       PointLatLng(_GarbageLocation2.latitude, _GarbageLocation2.longitude),
     );
@@ -122,22 +143,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
         position: _GarbageLocation1,
         infoWindow: const InfoWindow(title: "Garbage Location 1"),
         onTap: () {
-          _showGarbageBinsInfo(
-            context,
-            'Garbage Location 1',
-            'Paper',
-            0.95,
-            Colors.red,
-            'Glass',
-            0.50,
-            Colors.blue,
-            'Organic',
-            0.25,
-            Colors.green,
-            'Plastic',
-            0.10,
-            Color.fromARGB(255, 255, 15, 7),
-          );
+          _showGarbageBinsInfo(context, 'Garbage Location 1');
         },
       ),
       Marker(
@@ -146,22 +152,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
         position: _GarbageLocation2,
         infoWindow: const InfoWindow(title: "Garbage Location 2"),
         onTap: () {
-          _showGarbageBinsInfo(
-            context,
-            'Garbage Location 2',
-            'Paper',
-            0.85,
-            Colors.red,
-            'Glass',
-            0.60,
-            Colors.blue,
-            'Organic',
-            0.95,
-            Colors.green,
-            'Plastic',
-            0.95,
-            Color.fromARGB(255, 255, 230, 7),
-          );
+          _showGarbageBinsInfo(context, 'Garbage Location 2');
         },
       ),
       Marker(
@@ -170,42 +161,14 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
         position: _GarbageLocation3,
         infoWindow: const InfoWindow(title: "Garbage Location 3"),
         onTap: () {
-          _showGarbageBinsInfo(
-            context,
-            'Garbage Location 3',
-            'Paper',
-            0.70,
-            Colors.red,
-            'Glass',
-            0.40,
-            Colors.blue,
-            'Organic',
-            0.95,
-            Colors.green,
-            'Plastic',
-            0.05,
-            Color.fromARGB(255, 255, 230, 7),
-          );
+          _showGarbageBinsInfo(context, 'Garbage Location 3');
         },
       ),
     };
   }
 
-  void _showGarbageBinsInfo(
-      BuildContext context,
-      String locationName,
-      String bin1Name,
-      double bin1Level,
-      Color bin1Color,
-      String bin2Name,
-      double bin2Level,
-      Color bin2Color,
-      String bin3Name,
-      double bin3Level,
-      Color bin3Color,
-      String bin4Name,
-      double bin4Level,
-      Color bin4Color) {
+  void _showGarbageBinsInfo(BuildContext context, String locationName) {
+    final bins = garbageLevels[locationName]!;
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -224,10 +187,11 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
                 ),
               ),
               const SizedBox(height: 8),
-              _buildGarbageBinInfo(bin1Name, bin1Level, bin1Color),
-              _buildGarbageBinInfo(bin2Name, bin2Level, bin2Color),
-              _buildGarbageBinInfo(bin3Name, bin3Level, bin3Color),
-              _buildGarbageBinInfo(bin4Name, bin4Level, bin4Color),
+              _buildGarbageBinInfo('Paper', bins['Paper']!, Colors.red),
+              _buildGarbageBinInfo('Glass', bins['Glass']!, Colors.blue),
+              _buildGarbageBinInfo('Organic', bins['Organic']!, Colors.green),
+              _buildGarbageBinInfo(
+                  'Plastic', bins['Plastic']!, Color.fromARGB(255, 255, 15, 7)),
             ],
           ),
         );
@@ -285,28 +249,6 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   }
 
   List<String> _checkGarbageLevels() {
-    // Define the levels for Garbage Locations
-    Map<String, Map<String, double>> garbageLevels = {
-      'Location 1': {
-        'Paper': 0.95,
-        'Glass': 0.50,
-        'Organic': 0.25,
-        'Plastic': 0.10,
-      },
-      'Location 2': {
-        'Paper': 0.85,
-        'Glass': 0.60,
-        'Organic': 0.95,
-        'Plastic': 0.95,
-      },
-      'Location 3': {
-        'Paper': 0.70,
-        'Glass': 0.40,
-        'Organic': 0.95,
-        'Plastic': 0.05,
-      },
-    };
-
     List<String> messages = [];
 
     garbageLevels.forEach((location, bins) {
