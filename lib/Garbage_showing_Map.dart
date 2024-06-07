@@ -23,6 +23,8 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
       LatLng(7.131945323570431, 79.87612478326228);
   static const LatLng _GarbageLocation3 =
       LatLng(7.1284534794369705, 79.87694017478212);
+  static const LatLng _UrbanCouncilLocation =
+      LatLng(7.131348281994149, 79.88079215522744);
 
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
@@ -60,7 +62,8 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
       'AIzaSyBDlOfF8apqSfWypgNFfNEW_QXAqH5zkuM',
       PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
-      PointLatLng(_GarbageLocation2.latitude, _GarbageLocation2.longitude),
+      PointLatLng(
+          _UrbanCouncilLocation.latitude, _UrbanCouncilLocation.longitude),
     );
 
     if (result.points.isNotEmpty) {
@@ -137,6 +140,15 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
 
   Set<Marker> _createMarkers(BuildContext context) {
     return {
+      Marker(
+        markerId: MarkerId("_UrbanCouncilLocation"),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+        position: _UrbanCouncilLocation,
+        infoWindow: const InfoWindow(title: "Urban Council Location"),
+        onTap: () {
+          _showGarbageBinsInfo(context, 'UrbanCouncilLocation');
+        },
+      ),
       Marker(
         markerId: MarkerId("_garbageLocation1"),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
