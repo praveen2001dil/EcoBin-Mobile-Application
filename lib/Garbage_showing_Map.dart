@@ -83,11 +83,11 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
               iconSize: 35,
               color: Colors.black,
               onPressed: () {
-                String message = _checkGarbageLevels();
+                List<String> messages = _checkGarbageLevels();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NotificationPage(message: message),
+                    builder: (context) => NotificationPage(messages: messages),
                   ),
                 );
               },
@@ -156,10 +156,10 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
             0.60,
             Colors.blue,
             'Organic',
-            0.30,
+            0.95,
             Colors.green,
             'Plastic',
-            0.15,
+            0.95,
             Color.fromARGB(255, 255, 230, 7),
           );
         },
@@ -180,7 +180,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
             0.40,
             Colors.blue,
             'Organic',
-            0.20,
+            0.95,
             Colors.green,
             'Plastic',
             0.05,
@@ -284,7 +284,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
     );
   }
 
-  String _checkGarbageLevels() {
+  List<String> _checkGarbageLevels() {
     // Define the levels for Garbage Locations
     Map<String, Map<String, double>> garbageLevels = {
       'Location 1': {
@@ -296,27 +296,31 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
       'Location 2': {
         'Paper': 0.85,
         'Glass': 0.60,
-        'Organic': 0.30,
-        'Plastic': 0.15,
+        'Organic': 0.95,
+        'Plastic': 0.95,
       },
       'Location 3': {
         'Paper': 0.70,
         'Glass': 0.40,
-        'Organic': 0.20,
+        'Organic': 0.95,
         'Plastic': 0.05,
       },
     };
 
-    String message = "All bins are available for use";
+    List<String> messages = [];
 
     garbageLevels.forEach((location, bins) {
       bins.forEach((bin, level) {
-        if (level > 0.9) {
-          message = "Don't put any garbage in the $bin bin at $location";
+        if (level >= 0.9) {
+          messages.add("Don't put any garbage in the $bin bin at $location");
         }
       });
     });
 
-    return message;
+    if (messages.isEmpty) {
+      messages.add("All bins are available for use");
+    }
+
+    return messages;
   }
 }
