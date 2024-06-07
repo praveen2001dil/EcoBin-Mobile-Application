@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class NotificationPage extends StatelessWidget {
-  final String message;
+  final List<String> messages;
 
-  const NotificationPage({Key? key, required this.message}) : super(key: key);
+  const NotificationPage({Key? key, required this.messages}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +33,25 @@ class NotificationPage extends StatelessWidget {
             },
           ),
         ),
-        body: Center(
-          child: Text(
-            message,
-            style: TextStyle(
-              fontSize: 24,
-              fontFamily: 'Roboto-Bold',
-              color: Colors.black,
-              fontWeight: FontWeight.w900,
-            ),
-            textAlign: TextAlign.center,
+        body: Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListView.builder(
+            itemCount: messages.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Text(
+                  messages[index],
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontFamily: 'Roboto-Bold',
+                    color: Colors.black,
+                    fontWeight: FontWeight.w900,
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
+              );
+            },
           ),
         ),
       ),
