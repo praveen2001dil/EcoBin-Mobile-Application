@@ -38,17 +38,24 @@ class NotificationPage extends StatelessWidget {
           child: ListView.builder(
             itemCount: messages.length,
             itemBuilder: (context, index) {
+              bool isHighLevel =
+                  messages[index].startsWith("Don't put any garbage in the");
+
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  messages[index],
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: 'Roboto-Bold',
-                    color: Colors.black,
-                    fontWeight: FontWeight.w900,
+                child: Container(
+                  color: isHighLevel ? Colors.red : Colors.transparent,
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    messages[index],
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontFamily: 'Roboto-Bold',
+                      color: isHighLevel ? Colors.white : Colors.black,
+                      fontWeight: FontWeight.w900,
+                    ),
+                    textAlign: TextAlign.justify,
                   ),
-                  textAlign: TextAlign.justify,
                 ),
               );
             },
