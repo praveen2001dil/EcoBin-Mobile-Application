@@ -34,7 +34,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
     'Garbage Location 1': {
       'Paper': 0.95,
       'Glass': 0.50,
-      'Organic': 0.25,
+      'Organic': 0.98,
       'Plastic': 0.10,
     },
     'Garbage Location 2': {
@@ -60,7 +60,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
 
   _getPolyline() async {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyBDlOfF8apqSfWypgNFfNEW_QXAqH5zkuM',
+      'YOUR_GOOGLE_MAPS_API_KEY',
       PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
       PointLatLng(
           _UrbanCouncilLocation.latitude, _UrbanCouncilLocation.longitude),
