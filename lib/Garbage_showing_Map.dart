@@ -267,6 +267,8 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
       bins.forEach((bin, level) {
         if (level >= 0.9) {
           messages.add("Don't put any garbage in the $bin bin at $location");
+        } else if (level < 0.5) {
+          messages.add("You can add $bin garbage at $location");
         }
       });
     });
