@@ -51,11 +51,14 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
     },
   };
 
+  int notificationCount = 0;
+
   @override
   void initState() {
     super.initState();
     polylinePoints = PolylinePoints();
     _getPolyline();
+    _updateNotificationCount();
   }
 
   _getPolyline() async {
@@ -72,6 +75,13 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
       });
       setState(() {});
     }
+  }
+
+  _updateNotificationCount() {
+    List<String> messages = _checkGarbageLevels();
+    setState(() {
+      notificationCount = messages.length;
+    });
   }
 
   @override
@@ -102,19 +112,53 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
             },
           ),
           actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications),
-              iconSize: 35,
-              color: Colors.black,
-              onPressed: () {
-                List<String> messages = _checkGarbageLevels();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NotificationPage(messages: messages),
+            Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: IconButton(
+                    icon: const Icon(Icons.notifications),
+                    iconSize: 40,
+                    color: Colors.black,
+                    onPressed: () {
+                      List<String> messages = _checkGarbageLevels();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              NotificationPage(messages: messages),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
+                ),
+                if (notificationCount > 0)
+                  Positioned(
+                    right: 11,
+                    top: 5,
+                    child: Container(
+                      padding: EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      constraints: BoxConstraints(
+                        minWidth: 20,
+                        minHeight: 20,
+                      ),
+                      child: Text(
+                        '$notificationCount',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Roboto-Bold',
+                          fontWeight: FontWeight.w900,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+              ],
             ),
           ],
         ),
@@ -266,7 +310,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
     garbageLevels.forEach((location, bins) {
       bins.forEach((bin, level) {
         if (level >= 0.9) {
-          messages.add("Don't put any garbage in the $bin bin at $location");
+          messages.add("Don't put any $bin garbage in the bin at $location");
         } else if (level < 0.5) {
           messages.add("You can add $bin garbage at $location");
         }
