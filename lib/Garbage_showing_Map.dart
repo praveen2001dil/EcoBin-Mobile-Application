@@ -137,9 +137,8 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
                     right: 11,
                     top: 5,
                     child: Container(
-                      padding: EdgeInsets.all(2),
                       decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: const Color.fromARGB(255, 255, 17, 0),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       constraints: BoxConstraints(
@@ -150,7 +149,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
                         '$notificationCount',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16,
+                          fontSize: 17,
                           fontFamily: 'Roboto-Bold',
                           fontWeight: FontWeight.w900,
                         ),
