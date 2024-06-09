@@ -24,11 +24,11 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   static const LatLng _GarbageLocation3 =
       LatLng(7.1284534794369705, 79.87694017478212);
   static const LatLng _UrbanCouncilLocation =
-      LatLng(7.131348281994149, 79.88079215522744);
+      LatLng(7.131298444988958, 79.88100392751002);
 
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
-  late GoogleMapController mapController;
+  GoogleMapController? mapController;
 
   final Map<String, Map<String, double>> garbageLevels = {
     'Garbage Location 1': {
@@ -63,10 +63,10 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
 
   _getPolyline() async {
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'YOUR_GOOGLE_MAPS_API_KEY',
-      PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
+      'AIzaSyBDlOfF8apqSfWypgNFfNEW_QXAqH5zkuM',
       PointLatLng(
           _UrbanCouncilLocation.latitude, _UrbanCouncilLocation.longitude),
+      PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
     );
 
     if (result.points.isNotEmpty) {
