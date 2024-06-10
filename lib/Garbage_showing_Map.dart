@@ -189,7 +189,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
         position: _UrbanCouncilLocation,
         infoWindow: const InfoWindow(title: "Urban Council Location"),
         onTap: () {
-          _showGarbageBinsInfo(context, 'UrbanCouncilLocation');
+          _showGarbageBinsInfo(context, 'Urban Council Location');
         },
       ),
       Marker(
@@ -223,35 +223,39 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   }
 
   void _showGarbageBinsInfo(BuildContext context, String locationName) {
-    final bins = garbageLevels[locationName]!;
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return Container(
-          padding: const EdgeInsets.all(16),
-          color: Color.fromARGB(255, 207, 230, 207),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                locationName,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontFamily: 'Jaro',
-                  fontWeight: FontWeight.w700,
+    final bins = garbageLevels[locationName];
+    if (bins != null) {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding: const EdgeInsets.all(16),
+            color: Color.fromARGB(255, 207, 230, 207),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  locationName,
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontFamily: 'Jaro',
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              _buildGarbageBinInfo('Paper', bins['Paper']!, Colors.red),
-              _buildGarbageBinInfo('Glass', bins['Glass']!, Colors.blue),
-              _buildGarbageBinInfo('Organic', bins['Organic']!, Colors.green),
-              _buildGarbageBinInfo(
-                  'Plastic', bins['Plastic']!, Color.fromARGB(255, 255, 15, 7)),
-            ],
-          ),
-        );
-      },
-    );
+                const SizedBox(height: 8),
+                _buildGarbageBinInfo('Paper', bins['Paper'] ?? 0.0, Colors.red),
+                _buildGarbageBinInfo(
+                    'Glass', bins['Glass'] ?? 0.0, Colors.blue),
+                _buildGarbageBinInfo(
+                    'Organic', bins['Organic'] ?? 0.0, Colors.green),
+                _buildGarbageBinInfo('Plastic', bins['Plastic'] ?? 0.0,
+                    Color.fromARGB(255, 255, 15, 7)),
+              ],
+            ),
+          );
+        },
+      );
+    }
   }
 
   Widget _buildGarbageBinInfo(String binName, double level, Color color) {
