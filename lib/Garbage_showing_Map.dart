@@ -56,25 +56,8 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   @override
   void initState() {
     super.initState();
-    polylinePoints = PolylinePoints();
-    _getPolyline();
+
     _updateNotificationCount();
-  }
-
-  _getPolyline() async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyBDlOfF8apqSfWypgNFfNEW_QXAqH5zkuM',
-      PointLatLng(
-          _UrbanCouncilLocation.latitude, _UrbanCouncilLocation.longitude),
-      PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
-    );
-
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-      setState(() {});
-    }
   }
 
   _updateNotificationCount() {
@@ -164,15 +147,6 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
         body: GoogleMap(
           initialCameraPosition: CameraPosition(target: _pGooglePlex, zoom: 13),
           markers: _createMarkers(context),
-          polylines: {
-            Polyline(
-              polylineId: PolylineId('polyline'),
-              visible: true,
-              points: polylineCoordinates,
-              color: Colors.black,
-              width: 5,
-            ),
-          },
           onMapCreated: (GoogleMapController controller) {
             mapController = controller;
           },
