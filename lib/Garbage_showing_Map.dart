@@ -1,14 +1,20 @@
-import 'package:eco_bin_original/NotificationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:eco_bin_original/NotificationPage.dart';
 
 void main() {
   runApp(const GarbageshowingMap());
 }
 
 class GarbageshowingMap extends StatefulWidget {
-  const GarbageshowingMap({Key? key}) : super(key: key);
+  final LatLng? newLocation;
+  final String? newLocationName;
+  final double zoomLevel;
+
+  const GarbageshowingMap(
+      {Key? key, this.newLocation, this.newLocationName, this.zoomLevel = 13})
+      : super(key: key);
 
   @override
   _GarbageshowingMapState createState() => _GarbageshowingMapState();
@@ -56,7 +62,6 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   @override
   void initState() {
     super.initState();
-
     _updateNotificationCount();
   }
 
@@ -117,20 +122,21 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
                 ),
                 if (notificationCount > 0)
                   Positioned(
-                    right: 11,
-                    top: 5,
+                    right: 8,
+                    top: 8,
                     child: Container(
+                      padding: const EdgeInsets.all(3),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 17, 0),
+                        color: Colors.red,
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         minWidth: 20,
                         minHeight: 20,
                       ),
                       child: Text(
                         '$notificationCount',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 17,
                           fontFamily: 'Roboto-Bold',
@@ -145,7 +151,10 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
           ],
         ),
         body: GoogleMap(
-          initialCameraPosition: CameraPosition(target: _pGooglePlex, zoom: 13),
+          initialCameraPosition: CameraPosition(
+            target: widget.newLocation ?? _pGooglePlex,
+            zoom: widget.zoomLevel,
+          ),
           markers: _createMarkers(context),
           onMapCreated: (GoogleMapController controller) {
             mapController = controller;
@@ -156,7 +165,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   }
 
   Set<Marker> _createMarkers(BuildContext context) {
-    return {
+    Set<Marker> markers = {
       Marker(
         markerId: MarkerId("_UrbanCouncilLocation"),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
@@ -194,6 +203,22 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
         },
       ),
     };
+
+    if (widget.newLocation != null && widget.newLocationName != null) {
+      markers.add(
+        Marker(
+          markerId: MarkerId(widget.newLocationName!),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          position: widget.newLocation!,
+          infoWindow: InfoWindow(title: widget.newLocationName),
+          onTap: () {
+            _showGarbageBinsInfo(context, widget.newLocationName!);
+          },
+        ),
+      );
+    }
+
+    return markers;
   }
 
   void _showGarbageBinsInfo(BuildContext context, String locationName) {
@@ -204,7 +229,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
         builder: (context) {
           return Container(
             padding: const EdgeInsets.all(16),
-            color: Color.fromARGB(255, 207, 230, 207),
+            color: const Color.fromARGB(255, 207, 230, 207),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -223,7 +248,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
                 _buildGarbageBinInfo(
                     'Organic', bins['Organic'] ?? 0.0, Colors.green),
                 _buildGarbageBinInfo('Plastic', bins['Plastic'] ?? 0.0,
-                    Color.fromARGB(255, 255, 15, 7)),
+                    const Color.fromARGB(255, 255, 15, 7)),
               ],
             ),
           );
@@ -252,7 +277,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
           Expanded(
             child: LinearProgressIndicator(
               value: level,
-              backgroundColor: Color.fromARGB(255, 169, 172, 169),
+              backgroundColor: const Color.fromARGB(255, 169, 172, 169),
               color: color,
             ),
           ),
@@ -262,8 +287,8 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
             height: 30,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              border:
-                  Border.all(color: Color.fromARGB(255, 0, 255, 17), width: 2),
+              border: Border.all(
+                  color: const Color.fromARGB(255, 0, 255, 17), width: 2),
               borderRadius: BorderRadius.circular(5),
             ),
             child: Text(
