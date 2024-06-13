@@ -1,6 +1,7 @@
-import 'package:eco_bin_original/Garbage_showing_Map.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Importing Services Library for FilteringTextInputFormatter
+import 'package:eco_bin_original/Garbage_showing_Map.dart';
+import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(LocationAddPage());
@@ -14,6 +15,8 @@ class LocationAddPage extends StatefulWidget {
 }
 
 class _LocationAddPageState extends State<LocationAddPage> {
+  final TextEditingController _addressController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -61,11 +64,8 @@ class _LocationAddPageState extends State<LocationAddPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TextFormField(
-                  keyboardType:
-                      TextInputType.number, // Setting keyboardType to number
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly // Accept only digits
-                  ],
+                  controller: _addressController,
+                  keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     labelText: 'Your Address',
                     hintText: 'Enter Your Address here',
@@ -104,12 +104,28 @@ class _LocationAddPageState extends State<LocationAddPage> {
                   ),
                   child: TextButton(
                     onPressed: () {
+                      LatLng? location;
+                      String? locationName;
+                      double zoomLevel;
+
+                      if (_addressController.text.trim().isEmpty) {
+                        zoomLevel = 13;
+                      } else {
+                        location = LatLng(7.131708950802051, 79.88039606539519);
+                        locationName = "Garbage Location 1";
+                        zoomLevel = 17;
+                      }
+
                       Navigator.push(
                         context,
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  const GarbageshowingMap(),
+                                  GarbageshowingMap(
+                            newLocation: location,
+                            newLocationName: locationName,
+                            zoomLevel: zoomLevel,
+                          ),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             const begin = Offset(1.0, 0.0);
