@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:eco_bin_original/Garbage_showing_Map.dart';
+import 'package:eco_bin_original/Garbage_Showing_MapAdmin.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -16,6 +17,7 @@ class LocationAddPage extends StatefulWidget {
 
 class _LocationAddPageState extends State<LocationAddPage> {
   final TextEditingController _addressController = TextEditingController();
+  String? _selectedRole; // Default role is null to show placeholder
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +96,67 @@ class _LocationAddPageState extends State<LocationAddPage> {
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: DropdownButtonFormField<String>(
+                  value: _selectedRole,
+                  items: const [
+                    DropdownMenuItem(
+                      value: "User",
+                      child: Text(
+                        "User",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 3, 80, 5),
+                            fontSize: 20,
+                            fontFamily: 'RobotoSlab-Bold',
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    DropdownMenuItem(
+                      value: "Admin",
+                      child: Text(
+                        "Admin",
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 3, 80, 5),
+                            fontSize: 20,
+                            fontFamily: 'RobotoSlab-Bold',
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedRole = newValue;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Select Role',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(
+                        color: Colors.green,
+                        width: 2,
+                      ),
+                    ),
+                    prefixIcon: const Icon(Icons.person),
+                    prefixIconColor: Colors.green,
+                    labelStyle: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromARGB(255, 3, 80, 5),
+                    ),
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 30),
                 child: Container(
@@ -121,7 +184,6 @@ class _LocationAddPageState extends State<LocationAddPage> {
                         locationName = "Kotugoda";
                         zoomLevel = 15;
                       } else if (enteredAddress == "mukalagamuwa") {
-                        // Replace with actual coordinates for Mukalagamuwa
                         location = LatLng(7.131708950802051, 79.88039606539519);
                         locationName = "Mukalagamuwa";
                         zoomLevel = 17;
@@ -130,22 +192,34 @@ class _LocationAddPageState extends State<LocationAddPage> {
                         locationName = "Garbage Location 1";
                         zoomLevel = 17;
                       } else {
-                        // Default to Kotugoda if no specific address matched
                         location = LatLng(7.122999315287511, 79.92372488591329);
                         locationName = "Kotugoda";
                         zoomLevel = 15;
                       }
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => GarbageshowingMap(
-                            newLocation: location,
-                            newLocationName: locationName,
-                            zoomLevel: zoomLevel,
+                      if (_selectedRole == "User") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GarbageshowingMap(
+                              newLocation: location,
+                              newLocationName: locationName,
+                              zoomLevel: zoomLevel,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else if (_selectedRole == "Admin") {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GarbageshowingMapAdmin(
+                              newLocation: location,
+                              newLocationName: locationName,
+                              zoomLevel: zoomLevel,
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: const Text(
                       "Proceed",
