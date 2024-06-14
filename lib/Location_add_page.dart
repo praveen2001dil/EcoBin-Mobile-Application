@@ -55,9 +55,10 @@ class _LocationAddPageState extends State<LocationAddPage> {
                 child: Text(
                   "Here’s the part where you have to transport the waste to the dumpsite closest to you.",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600),
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -108,38 +109,41 @@ class _LocationAddPageState extends State<LocationAddPage> {
                       String? locationName;
                       double zoomLevel;
 
-                      if (_addressController.text.trim().isEmpty) {
-                        zoomLevel = 13;
-                      } else {
+                      String enteredAddress =
+                          _addressController.text.trim().toLowerCase();
+
+                      if (enteredAddress == "seeduwa") {
+                        location = LatLng(7.124156811064787, 79.87597862382015);
+                        locationName = "Seeduwa";
+                        zoomLevel = 15;
+                      } else if (enteredAddress == "kotugoda") {
+                        location = LatLng(7.122999315287511, 79.92372488591329);
+                        locationName = "Kotugoda";
+                        zoomLevel = 15;
+                      } else if (enteredAddress == "mukalagamuwa") {
+                        // Replace with actual coordinates for Mukalagamuwa
+                        location = LatLng(7.131708950802051, 79.88039606539519);
+                        locationName = "Mukalagamuwa";
+                        zoomLevel = 17;
+                      } else if (enteredAddress == "garbage location 1") {
                         location = LatLng(7.131708950802051, 79.88039606539519);
                         locationName = "Garbage Location 1";
                         zoomLevel = 17;
+                      } else {
+                        // Default to Kotugoda if no specific address matched
+                        location = LatLng(7.122999315287511, 79.92372488591329);
+                        locationName = "Kotugoda";
+                        zoomLevel = 15;
                       }
 
                       Navigator.push(
                         context,
-                        PageRouteBuilder(
-                          pageBuilder:
-                              (context, animation, secondaryAnimation) =>
-                                  GarbageshowingMap(
+                        MaterialPageRoute(
+                          builder: (context) => GarbageshowingMap(
                             newLocation: location,
                             newLocationName: locationName,
                             zoomLevel: zoomLevel,
                           ),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(1.0, 0.0);
-                            const end = Offset.zero;
-                            const curve = Curves.ease;
-
-                            var tween = Tween(begin: begin, end: end)
-                                .chain(CurveTween(curve: curve));
-
-                            return SlideTransition(
-                              position: animation.drive(tween),
-                              child: child,
-                            );
-                          },
                         ),
                       );
                     },
