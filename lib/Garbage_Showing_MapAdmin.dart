@@ -1,14 +1,20 @@
-import 'package:eco_bin_original/NotificationAdmin.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:eco_bin_original/NotificationPage.dart';
 
 void main() {
   runApp(const GarbageshowingMapAdmin());
 }
 
 class GarbageshowingMapAdmin extends StatefulWidget {
-  const GarbageshowingMapAdmin({Key? key}) : super(key: key);
+  final LatLng? newLocation;
+  final String? newLocationName;
+  final double zoomLevel;
+
+  const GarbageshowingMapAdmin(
+      {Key? key, this.newLocation, this.newLocationName, this.zoomLevel = 13})
+      : super(key: key);
 
   @override
   _GarbageshowingMapAdminState createState() => _GarbageshowingMapAdminState();
@@ -25,6 +31,10 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
       LatLng(7.1284534794369705, 79.87694017478212);
   static const LatLng _UrbanCouncilLocation =
       LatLng(7.131298444988958, 79.88100392751002);
+  static const LatLng _Seeduwa = LatLng(7.124156811064787, 79.87597862382015);
+  static const LatLng _Kotugoda = LatLng(7.122999315287511, 79.92372488591329);
+  static const LatLng _Mukalangamuwa =
+      LatLng(7.137730155840432, 79.88328531035395);
 
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
@@ -56,25 +66,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
   @override
   void initState() {
     super.initState();
-    polylinePoints = PolylinePoints();
-    _getPolyline();
     _updateNotificationCount();
-  }
-
-  _getPolyline() async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyBDlOfF8apqSfWypgNFfNEW_QXAqH5zkuM',
-      PointLatLng(
-          _UrbanCouncilLocation.latitude, _UrbanCouncilLocation.longitude),
-      PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
-    );
-
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-      setState(() {});
-    }
   }
 
   _updateNotificationCount() {
@@ -126,7 +118,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              NotificationAdmin(messages: messages),
+                              NotificationPage(messages: messages),
                         ),
                       );
                     },
@@ -134,20 +126,21 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
                 ),
                 if (notificationCount > 0)
                   Positioned(
-                    right: 11,
-                    top: 5,
+                    right: 8,
+                    top: 8,
                     child: Container(
+                      padding: const EdgeInsets.all(3),
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 255, 17, 0),
+                        color: Colors.red,
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         minWidth: 20,
                         minHeight: 20,
                       ),
                       child: Text(
                         '$notificationCount',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 17,
                           fontFamily: 'Roboto-Bold',
@@ -162,17 +155,11 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
           ],
         ),
         body: GoogleMap(
-          initialCameraPosition: CameraPosition(target: _pGooglePlex, zoom: 13),
+          initialCameraPosition: CameraPosition(
+            target: widget.newLocation ?? _pGooglePlex,
+            zoom: widget.zoomLevel,
+          ),
           markers: _createMarkers(context),
-          polylines: {
-            Polyline(
-              polylineId: PolylineId('polyline'),
-              visible: true,
-              points: polylineCoordinates,
-              color: Colors.black,
-              width: 5,
-            ),
-          },
           onMapCreated: (GoogleMapController controller) {
             mapController = controller;
           },
@@ -182,7 +169,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
   }
 
   Set<Marker> _createMarkers(BuildContext context) {
-    return {
+    Set<Marker> markers = {
       Marker(
         markerId: MarkerId("_UrbanCouncilLocation"),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
@@ -220,6 +207,22 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
         },
       ),
     };
+
+    if (widget.newLocation != null && widget.newLocationName != null) {
+      markers.add(
+        Marker(
+          markerId: MarkerId(widget.newLocationName!),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          position: widget.newLocation!,
+          infoWindow: InfoWindow(title: widget.newLocationName),
+          onTap: () {
+            _showGarbageBinsInfo(context, widget.newLocationName!);
+          },
+        ),
+      );
+    }
+
+    return markers;
   }
 
   void _showGarbageBinsInfo(BuildContext context, String locationName) {
@@ -230,7 +233,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
         builder: (context) {
           return Container(
             padding: const EdgeInsets.all(16),
-            color: Color.fromARGB(255, 207, 230, 207),
+            color: const Color.fromARGB(255, 207, 230, 207),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -249,7 +252,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
                 _buildGarbageBinInfo(
                     'Organic', bins['Organic'] ?? 0.0, Colors.green),
                 _buildGarbageBinInfo('Plastic', bins['Plastic'] ?? 0.0,
-                    Color.fromARGB(255, 255, 15, 7)),
+                    const Color.fromARGB(255, 255, 15, 7)),
               ],
             ),
           );
@@ -278,7 +281,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
           Expanded(
             child: LinearProgressIndicator(
               value: level,
-              backgroundColor: Color.fromARGB(255, 169, 172, 169),
+              backgroundColor: const Color.fromARGB(255, 169, 172, 169),
               color: color,
             ),
           ),
@@ -288,8 +291,8 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
             height: 30,
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              border:
-                  Border.all(color: Color.fromARGB(255, 0, 255, 17), width: 2),
+              border: Border.all(
+                  color: const Color.fromARGB(255, 0, 255, 17), width: 2),
               borderRadius: BorderRadius.circular(5),
             ),
             child: Text(
