@@ -98,6 +98,12 @@ class _LoginState extends State<Login> {
                           prefixIcon: const Icon(Icons.person),
                           prefixIconColor: Colors.green,
                         ),
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 3, 80, 5),
+                          fontSize: 20,
+                          fontFamily: 'RobotoSlab-Bold',
+                          fontWeight: FontWeight.w600,
+                        ),
                         maxLength: 10,
                       ),
                       TextFormField(
@@ -133,6 +139,12 @@ class _LoginState extends State<Login> {
                           ),
                           prefixIcon: const Icon(Icons.message_sharp),
                           prefixIconColor: Colors.green,
+                        ),
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 3, 80, 5),
+                          fontSize: 20,
+                          fontFamily: 'RobotoSlab-Bold',
+                          fontWeight: FontWeight.w600,
                         ),
                         maxLength: 20,
                       ),
@@ -182,6 +194,12 @@ class _LoginState extends State<Login> {
                             fontWeight: FontWeight.w900,
                             color: Color.fromARGB(255, 3, 80, 5),
                           ),
+                        ),
+                        style: const TextStyle(
+                          color: Color.fromARGB(255, 3, 80, 5),
+                          fontSize: 20,
+                          fontFamily: 'RobotoSlab-Bold',
+                          fontWeight: FontWeight.w600,
                         ),
                         obscureText: _obscurePassword,
                       ),
