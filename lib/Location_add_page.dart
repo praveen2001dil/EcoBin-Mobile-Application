@@ -94,6 +94,12 @@ class _LocationAddPageState extends State<LocationAddPage> {
                       color: Color.fromARGB(255, 3, 80, 5),
                     ),
                   ),
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 3, 80, 5),
+                    fontSize: 20,
+                    fontFamily: 'RobotoSlab-Bold',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
