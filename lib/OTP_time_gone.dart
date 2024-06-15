@@ -93,6 +93,12 @@ class _OTPTimeGoneState extends State<OTPTimeGone> {
                       color: Color.fromARGB(255, 3, 80, 5),
                     ),
                   ),
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 3, 80, 5),
+                    fontSize: 20,
+                    fontFamily: 'RobotoSlab-Bold',
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               Padding(
