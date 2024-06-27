@@ -45,7 +45,7 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
       'Paper': 0.95,
       'Glass': 0.50,
       'Organic': 0.98,
-      'Plastic': 0.10,
+      'Plastic': 0.90,
     },
     'Garbage Location 2': {
       'Paper': 0.85,
