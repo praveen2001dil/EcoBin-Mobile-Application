@@ -197,6 +197,15 @@ class _LocationAddPageState extends State<LocationAddPage> {
                         location = LatLng(7.131708950802051, 79.88039606539519);
                         locationName = "Garbage Location 1";
                         zoomLevel = 17;
+                      } else if (enteredAddress == "garbage location 2") {
+                        location = LatLng(7.131945323570431, 79.87612478326228);
+                        locationName = "Garbage Location 2";
+                        zoomLevel = 17;
+                      } else if (enteredAddress == "garbage location 3") {
+                        location =
+                            LatLng(7.1284534794369705, 79.87694017478212);
+                        locationName = "Garbage Location 3";
+                        zoomLevel = 17;
                       } else {
                         location = LatLng(7.122999315287511, 79.92372488591329);
                         locationName = "Kotugoda";
