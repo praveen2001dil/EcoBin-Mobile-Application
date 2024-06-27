@@ -1,7 +1,7 @@
+import 'package:eco_bin_original/NotificationAdmin.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
-import 'package:eco_bin_original/NotificationPage.dart';
 
 void main() {
   runApp(const GarbageshowingMapAdmin());
@@ -45,7 +45,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
       'Paper': 0.95,
       'Glass': 0.50,
       'Organic': 0.98,
-      'Plastic': 0.10,
+      'Plastic': 0.90,
     },
     'Garbage Location 2': {
       'Paper': 0.85,
@@ -66,7 +66,25 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
   @override
   void initState() {
     super.initState();
+    polylinePoints = PolylinePoints();
+    _getPolyline();
     _updateNotificationCount();
+  }
+
+  _getPolyline() async {
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      'AIzaSyBDlOfF8apqSfWypgNFfNEW_QXAqH5zkuM',
+      PointLatLng(
+          _UrbanCouncilLocation.latitude, _UrbanCouncilLocation.longitude),
+      PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
+    );
+
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+      setState(() {});
+    }
   }
 
   _updateNotificationCount() {
@@ -118,7 +136,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              NotificationPage(messages: messages),
+                              NotificationAdmin(messages: messages),
                         ),
                       );
                     },
@@ -160,6 +178,15 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
             zoom: widget.zoomLevel,
           ),
           markers: _createMarkers(context),
+          polylines: {
+            Polyline(
+              polylineId: PolylineId('polyline'),
+              visible: true,
+              points: polylineCoordinates,
+              color: Colors.black,
+              width: 5,
+            ),
+          },
           onMapCreated: (GoogleMapController controller) {
             mapController = controller;
           },
@@ -316,9 +343,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
     garbageLevels.forEach((location, bins) {
       bins.forEach((bin, level) {
         if (level >= 0.9) {
-          messages.add("Don't put any $bin garbage in the bin at $location");
-        } else if (level < 0.5) {
-          messages.add("You can add $bin garbage at $location");
+          messages.add("Please collect $bin garbage in the bin at $location");
         }
       });
     });
