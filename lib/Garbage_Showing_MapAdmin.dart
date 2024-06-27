@@ -32,9 +32,8 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
   static const LatLng _UrbanCouncilLocation =
       LatLng(7.131298444988958, 79.88100392751002);
   static const LatLng _Seeduwa = LatLng(7.124156811064787, 79.87597862382015);
-  static const LatLng _Kotugoda = LatLng(7.122999315287511, 79.92372488591329);
-  static const LatLng _Mukalangamuwa =
-      LatLng(7.137730155840432, 79.88328531035395);
+  //static const LatLng _Kotugoda = LatLng(7.122999315287511, 79.92372488591329);
+  //static const LatLng _Mukalangamuwa =LatLng(7.137730155840432, 79.88328531035395);
 
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
