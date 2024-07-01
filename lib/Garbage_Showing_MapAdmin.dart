@@ -32,8 +32,9 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
   static const LatLng _UrbanCouncilLocation =
       LatLng(7.131298444988958, 79.88100392751002);
   static const LatLng _Seeduwa = LatLng(7.124156811064787, 79.87597862382015);
-  //static const LatLng _Kotugoda = LatLng(7.122999315287511, 79.92372488591329);
-  //static const LatLng _Mukalangamuwa =LatLng(7.137730155840432, 79.88328531035395);
+  static const LatLng _Kotugoda = LatLng(7.122999315287511, 79.92372488591329);
+  static const LatLng _Mukalangamuwa =
+      LatLng(7.137730155840432, 79.88328531035395);
 
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
@@ -42,48 +43,80 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
   final Map<String, Map<String, double>> garbageLevels = {
     'Garbage Location 1': {
       'Paper': 0.95,
-      'Glass': 0.50,
+      'Glass': 0.92,
       'Organic': 0.98,
-      'Plastic': 0.90,
+      'Plastic': 0.95,
     },
     'Garbage Location 2': {
-      'Paper': 0.85,
-      'Glass': 0.60,
-      'Organic': 0.95,
+      'Paper': 0.68,
+      'Glass': 0.98,
+      'Organic': 0.65,
       'Plastic': 0.95,
     },
     'Garbage Location 3': {
-      'Paper': 0.70,
-      'Glass': 0.40,
+      'Paper': 0.60,
+      'Glass': 0.90,
       'Organic': 0.95,
       'Plastic': 0.95,
     },
   };
 
   int notificationCount = 0;
-
   @override
   void initState() {
     super.initState();
     polylinePoints = PolylinePoints();
-    _getPolyline();
+    _updatePolyline();
     _updateNotificationCount();
   }
 
-  _getPolyline() async {
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      'AIzaSyBDlOfF8apqSfWypgNFfNEW_QXAqH5zkuM',
-      PointLatLng(
-          _UrbanCouncilLocation.latitude, _UrbanCouncilLocation.longitude),
-      PointLatLng(_GarbageLocation1.latitude, _GarbageLocation1.longitude),
-    );
+  Future<void> _updatePolyline() async {
+    polylineCoordinates.clear();
 
-    if (result.points.isNotEmpty) {
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-      setState(() {});
+    // Iterate through each garbage location
+    for (var entry in garbageLevels.entries) {
+      final locationName = entry.key;
+      final levels = entry.value;
+
+      // Check if all bin levels are over 90%
+      if (levels['Paper']! >= 0.9 &&
+          levels['Glass']! >= 0.9 &&
+          levels['Organic']! >= 0.9 &&
+          levels['Plastic']! >= 0.9) {
+        // Determine the coordinates of the garbage location
+        LatLng garbageLocation;
+        switch (locationName) {
+          case 'Garbage Location 1':
+            garbageLocation = _GarbageLocation1;
+            break;
+          case 'Garbage Location 2':
+            garbageLocation = _GarbageLocation2;
+            break;
+          case 'Garbage Location 3':
+            garbageLocation = _GarbageLocation3;
+            break;
+          default:
+            continue;
+        }
+
+        // Fetch the polyline coordinates
+        PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+          'AIzaSyBDlOfF8apqSfWypgNFfNEW_QXAqH5zkuM',
+          PointLatLng(
+              _UrbanCouncilLocation.latitude, _UrbanCouncilLocation.longitude),
+          PointLatLng(garbageLocation.latitude, garbageLocation.longitude),
+        );
+
+        // Add polyline coordinates if route is found
+        if (result.points.isNotEmpty) {
+          result.points.forEach((PointLatLng point) {
+            polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+          });
+        }
+      }
     }
+
+    setState(() {});
   }
 
   _updateNotificationCount() {
