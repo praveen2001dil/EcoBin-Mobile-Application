@@ -40,15 +40,15 @@ class Selection extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 25),
+                SizedBox(height: 15),
                 Padding(
                   padding: EdgeInsets.only(left: 25),
                   child: Text(
                     "WHO ARE YOU??",
                     style: TextStyle(
-                      fontSize: 40,
-                      fontFamily: 'RobotoSlab-Bold',
-                      fontWeight: FontWeight.w900,
+                      fontSize: 45,
+                      fontFamily: 'Jaro',
+                      fontWeight: FontWeight.w700,
                       color: Color.fromARGB(255, 50, 199, 55),
                     ),
                   ),
