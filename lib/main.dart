@@ -2,8 +2,25 @@
 import 'package:eco_bin_original/Landing_page.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+void main() async {
+  // Ensure Flutter binding is initialized
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    // Initialize Firebase
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print("Connection Success");
+
+    // Run the app
+    runApp(MyApp());
+  } catch (e) {
+    print("Connection failed: " + e.toString());
+  }
 }
 
 class MyApp extends StatelessWidget {
