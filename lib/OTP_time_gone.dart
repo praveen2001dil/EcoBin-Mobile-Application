@@ -1,3 +1,4 @@
+import 'package:eco_bin_original/Login/Login.dart';
 import 'package:eco_bin_original/Set_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // Importing Services Library for FilteringTextInputFormatter
@@ -148,7 +149,7 @@ class _OTPTimeGoneState extends State<OTPTimeGone> {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  const SetPassword(),
+                                  const LoginScreen(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             const begin = Offset(1.0, 0.0);

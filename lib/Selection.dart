@@ -1,5 +1,5 @@
-import 'package:eco_bin_original/Sign_up.dart';
-import 'package:eco_bin_original/Login.dart';
+import 'package:eco_bin_original/SignUp/Sign_up.dart';
+import 'package:eco_bin_original/Login/Login.dart';
 import 'package:flutter/material.dart';
 
 class Selection extends StatelessWidget {
@@ -74,8 +74,9 @@ class Selection extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  isLogin ? const Login() : const SignUp()),
+                              builder: (context) => isLogin
+                                  ? const LoginScreen()
+                                  : const SignupScreen()),
                         );
                       },
                       child: Column(
@@ -102,8 +103,9 @@ class Selection extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  isLogin ? const Login() : const SignUp()),
+                              builder: (context) => isLogin
+                                  ? const LoginScreen()
+                                  : const SignupScreen()),
                         );
                       },
                       child: Column(
