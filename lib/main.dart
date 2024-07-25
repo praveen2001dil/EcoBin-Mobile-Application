@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, file_names
+import 'package:eco_bin_original/Authentication/firebase_options.dart';
 import 'package:eco_bin_original/Landing_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 void main() async {
   // Ensure Flutter binding is initialized
