@@ -1,6 +1,7 @@
+import 'package:eco_bin_original/Features/Garbage_Showing_MapAdmin.dart';
+import 'package:eco_bin_original/Features/Garbage_showing_Map.dart';
 import 'package:flutter/material.dart';
-import 'package:eco_bin_original/Garbage_showing_Map.dart';
-import 'package:eco_bin_original/Garbage_Showing_MapAdmin.dart';
+
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
