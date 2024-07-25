@@ -1,4 +1,4 @@
-import 'package:eco_bin_original/Login.dart';
+import 'package:eco_bin_original/Login/Login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -188,7 +188,7 @@ class _SetPasswordState extends State<SetPassword> {
                         PageRouteBuilder(
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  const Login(),
+                                  const LoginScreen(),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             const begin = Offset(1.0, 0.0);
