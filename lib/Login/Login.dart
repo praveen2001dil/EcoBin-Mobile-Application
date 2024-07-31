@@ -1,10 +1,7 @@
 import 'package:eco_bin_original/Authentication/AuthMethod.dart';
 import 'package:eco_bin_original/Authentication/FireBaseSerives.dart';
-
 import 'package:eco_bin_original/Location_add_page.dart';
 import 'package:eco_bin_original/Login/ForgotPassword.dart';
-import 'package:eco_bin_original/Login/PhoneAuthentication.dart';
-
 import 'package:eco_bin_original/MyButtons.dart';
 import 'package:eco_bin_original/SignUp/Sign_up.dart';
 import 'package:eco_bin_original/SignUp/TextFieldInput.dart';
@@ -176,7 +173,7 @@ class _SignupScreenState extends State<LoginScreen> {
                 ),
               ),
               // for phone authentication
-              const PhoneAuthentication(),
+              //const PhoneAuthentication(),
               // Don't have an account? got to signup screen
               Padding(
                 padding: const EdgeInsets.only(
