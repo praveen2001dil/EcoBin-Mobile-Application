@@ -33,7 +33,7 @@ class LandingPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: const Padding(
-            padding: EdgeInsets.only(left: 120, bottom: 15),
+            padding: EdgeInsets.only(left: 120, top: 10),
             child: Text(
               "ECOBIN",
               style: TextStyle(
