@@ -47,7 +47,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 7000), () {
+    Future.delayed(Duration(milliseconds: 5000), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
