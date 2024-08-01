@@ -6,7 +6,6 @@ import 'package:eco_bin_original/MyButtons.dart';
 import 'package:eco_bin_original/SignUp/Sign_up.dart';
 import 'package:eco_bin_original/SignUp/TextFieldInput.dart';
 import 'package:eco_bin_original/SignUp/snackbar.dart';
-
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,12 +19,19 @@ class _SignupScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
+  bool _obscureText = true;
 
   @override
   void dispose() {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 
   // email and passowrd auth part
@@ -110,6 +116,17 @@ class _SignupScreenState extends State<LoginScreen> {
                 hintText: 'Enter Your Password',
                 textInputType: TextInputType.text,
                 isPass: true,
+                obscureText: _obscureText,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: Color.fromARGB(255, 50, 199, 55),
+                    ),
+                    onPressed: _togglePasswordVisibility,
+                  ),
+                ),
               ),
               //  we call our forgot password below the login in button
               const ForgotPassword(),

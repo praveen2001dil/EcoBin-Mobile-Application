@@ -26,9 +26,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           child: const Text(
             "Forgot Password?",
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: Colors.blue,
+              fontSize: 20,
+              fontFamily: 'RobotoSlab-Bold',
+              fontWeight: FontWeight.w900,
+              color: Color.fromARGB(255, 6, 111, 10),
             ),
           ),
         ),
@@ -60,8 +61,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       const Text(
                         "Forgot Your Password",
                         style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 20,
+                          fontFamily: 'RobotoSlab-Bold',
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
                       IconButton(
@@ -77,8 +80,23 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     controller: emailController,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: "Enter the Email",
-                      hintText: "eg abc@gmail.com",
+                      labelText: "Enter Your Email",
+                      labelStyle: TextStyle(
+                        color: Color.fromARGB(
+                            255, 50, 199, 55), // Set the label text color
+                        fontSize: 20, // Set the label text size
+
+                        fontFamily: 'RobotoSlab-Bold',
+                        fontWeight:
+                            FontWeight.w900, // Set the label text weight
+                      ),
+                      hintText: "Ex: abc@gmail.com",
+                      hintStyle: TextStyle(
+                        fontSize: 20, // Set the label text size
+
+                        fontFamily: 'RobotoSlab-Bold',
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -107,8 +125,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     child: const Text(
                       "Send",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 20,
+                        fontFamily: 'RobotoSlab-Bold',
+                        fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),
                     ),

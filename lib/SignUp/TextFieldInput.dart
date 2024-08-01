@@ -6,6 +6,9 @@ class TextFieldInput extends StatelessWidget {
   final String hintText;
   final IconData? icon;
   final TextInputType textInputType;
+  final bool obscureText; // Add this line
+  final Widget? suffixIcon; // Add this line
+
   const TextFieldInput({
     super.key,
     required this.textEditingController,
@@ -13,6 +16,8 @@ class TextFieldInput extends StatelessWidget {
     required this.hintText,
     this.icon,
     required this.textInputType,
+    this.obscureText = false, // Default value
+    this.suffixIcon, // Default value
   });
 
   @override
@@ -27,6 +32,8 @@ class TextFieldInput extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
         controller: textEditingController,
+        obscureText:
+            isPass ? obscureText : false, // Use the obscureText parameter
         decoration: InputDecoration(
           prefixIcon: Icon(icon, color: const Color.fromARGB(255, 0, 255, 8)),
           hintText: hintText,
@@ -56,9 +63,9 @@ class TextFieldInput extends StatelessWidget {
             vertical: 15,
             horizontal: 20,
           ),
+          suffixIcon: suffixIcon, // Use the suffixIcon parameter
         ),
         keyboardType: textInputType,
-        obscureText: isPass,
       ),
     );
   }
