@@ -3,9 +3,7 @@ import 'package:eco_bin_original/Location_add_page.dart';
 import 'package:eco_bin_original/Login/Login.dart';
 import 'package:eco_bin_original/MyButtons.dart';
 import 'package:eco_bin_original/SignUp/TextFieldInput.dart';
-
 import 'package:eco_bin_original/SignUp/snackbar.dart';
-
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -20,6 +18,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
+  bool _obscureText = true;
 
   @override
   void dispose() {
@@ -29,22 +28,25 @@ class _SignupScreenState extends State<SignupScreen> {
     nameController.dispose();
   }
 
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   void signupUser() async {
-    // set is loading to true.
     setState(() {
       isLoading = true;
     });
-    // signup user using our authmethod
     String res = await AuthMethod().signupUser(
         email: emailController.text,
         password: passwordController.text,
         name: nameController.text);
-    // if string return is success, user has been creaded and navigate to next screen other witse show error.
+
     if (res == "success") {
       setState(() {
         isLoading = false;
       });
-      //navigate to the next screen
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => const LocationAddPage(),
@@ -54,7 +56,6 @@ class _SignupScreenState extends State<SignupScreen> {
       setState(() {
         isLoading = false;
       });
-      // show error
       showSnackBar(context, res);
     }
   }
@@ -119,6 +120,16 @@ class _SignupScreenState extends State<SignupScreen> {
                 hintText: 'Enter Your Password',
                 textInputType: TextInputType.text,
                 isPass: true,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: Color.fromARGB(255, 50, 199, 55),
+                    ),
+                    onPressed: _togglePasswordVisibility,
+                  ),
+                ),
               ),
               MyButtons(onTap: signupUser, text: "Sign Up"),
               Row(
@@ -153,7 +164,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   )
                 ],
               ),
-              // Add some space between text and image
               Image.asset(
                 'assets/bro.jpg',
                 width: 400.0,
