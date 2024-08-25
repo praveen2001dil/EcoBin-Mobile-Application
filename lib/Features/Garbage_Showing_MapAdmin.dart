@@ -54,7 +54,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
       'Plastic': 0.95,
     },
     'Garbage Location 3': {
-      'Paper': 0.60,
+      'Paper': 0.93,
       'Glass': 0.90,
       'Organic': 0.95,
       'Plastic': 0.95,
@@ -101,7 +101,7 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
 
         // Fetch the polyline coordinates
         PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-          'AIzaSyBDlOfF8apqSfWypgNFfNEW_QXAqH5zkuM',
+          'AIzaSyDQhGhc9igICKP7jhgk2WeFAHW8dlLgkBk',
           PointLatLng(
               _UrbanCouncilLocation.latitude, _UrbanCouncilLocation.longitude),
           PointLatLng(garbageLocation.latitude, garbageLocation.longitude),

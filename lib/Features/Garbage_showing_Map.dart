@@ -43,19 +43,19 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   final Map<String, Map<String, double>> garbageLevels = {
     'Garbage Location 1': {
       'Paper': 0.95,
-      'Glass': 0.50,
+      'Glass': 0.92,
       'Organic': 0.98,
-      'Plastic': 0.90,
+      'Plastic': 0.95,
     },
     'Garbage Location 2': {
-      'Paper': 0.85,
-      'Glass': 0.60,
-      'Organic': 0.95,
+      'Paper': 0.68,
+      'Glass': 0.98,
+      'Organic': 0.65,
       'Plastic': 0.95,
     },
     'Garbage Location 3': {
-      'Paper': 0.70,
-      'Glass': 0.40,
+      'Paper': 0.93,
+      'Glass': 0.90,
       'Organic': 0.95,
       'Plastic': 0.95,
     },
