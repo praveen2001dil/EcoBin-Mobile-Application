@@ -45,9 +45,32 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   late PolylinePoints polylinePoints;
   GoogleMapController? mapController;
 
+<<<<<<< HEAD
   List<_GarbageLocation> garbageLocations = [];
 
   final Map<String, Map<String, double>> garbageLevels = {};
+=======
+  final Map<String, Map<String, double>> garbageLevels = {
+    'Garbage Location 1': {
+      'Paper': 0.95,
+      'Glass': 0.92,
+      'Organic': 0.98,
+      'Plastic': 0.95,
+    },
+    'Garbage Location 2': {
+      'Paper': 0.68,
+      'Glass': 0.98,
+      'Organic': 0.65,
+      'Plastic': 0.95,
+    },
+    'Garbage Location 3': {
+      'Paper': 0.93,
+      'Glass': 0.90,
+      'Organic': 0.95,
+      'Plastic': 0.95,
+    },
+  };
+>>>>>>> 0893b7fd3b445b30058778dcd8d745fda771d71b
 
   int notificationCount = 0;
 

@@ -45,9 +45,32 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
   late PolylinePoints polylinePoints;
   GoogleMapController? mapController;
 
+<<<<<<< HEAD
   List<_GarbageLocation> garbageLocations = [];
 
   final Map<String, Map<String, double>> garbageLevels = {};
+=======
+  final Map<String, Map<String, double>> garbageLevels = {
+    'Garbage Location 1': {
+      'Paper': 0.95,
+      'Glass': 0.92,
+      'Organic': 0.98,
+      'Plastic': 0.95,
+    },
+    'Garbage Location 2': {
+      'Paper': 0.68,
+      'Glass': 0.98,
+      'Organic': 0.65,
+      'Plastic': 0.95,
+    },
+    'Garbage Location 3': {
+      'Paper': 0.93,
+      'Glass': 0.90,
+      'Organic': 0.95,
+      'Plastic': 0.95,
+    },
+  };
+>>>>>>> 0893b7fd3b445b30058778dcd8d745fda771d71b
 
   int notificationCount = 0;
 
@@ -60,7 +83,60 @@ class _GarbageshowingMapAdminState extends State<GarbageshowingMapAdmin> {
     _fetchRealTimeData();
   }
 
+<<<<<<< HEAD
   void _updateNotificationCount() {
+=======
+  Future<void> _updatePolyline() async {
+    polylineCoordinates.clear();
+
+    // Iterate through each garbage location
+    for (var entry in garbageLevels.entries) {
+      final locationName = entry.key;
+      final levels = entry.value;
+
+      // Check if all bin levels are over 90%
+      if (levels['Paper']! >= 0.9 &&
+          levels['Glass']! >= 0.9 &&
+          levels['Organic']! >= 0.9 &&
+          levels['Plastic']! >= 0.9) {
+        // Determine the coordinates of the garbage location
+        LatLng garbageLocation;
+        switch (locationName) {
+          case 'Garbage Location 1':
+            garbageLocation = _GarbageLocation1;
+            break;
+          case 'Garbage Location 2':
+            garbageLocation = _GarbageLocation2;
+            break;
+          case 'Garbage Location 3':
+            garbageLocation = _GarbageLocation3;
+            break;
+          default:
+            continue;
+        }
+
+        // Fetch the polyline coordinates
+        PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+          'AIzaSyDQhGhc9igICKP7jhgk2WeFAHW8dlLgkBk',
+          PointLatLng(
+              _UrbanCouncilLocation.latitude, _UrbanCouncilLocation.longitude),
+          PointLatLng(garbageLocation.latitude, garbageLocation.longitude),
+        );
+
+        // Add polyline coordinates if route is found
+        if (result.points.isNotEmpty) {
+          result.points.forEach((PointLatLng point) {
+            polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+          });
+        }
+      }
+    }
+
+    setState(() {});
+  }
+
+  _updateNotificationCount() {
+>>>>>>> 0893b7fd3b445b30058778dcd8d745fda771d71b
     List<String> messages = _checkGarbageLevels();
     setState(() {
       notificationCount = messages.length;
