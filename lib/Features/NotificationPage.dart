@@ -98,14 +98,14 @@ class NotificationPage extends StatelessWidget {
                   ...messages.map((message) {
                     Color messageColor;
 
-                    if (message.contains("Don't put") &&
-                        _extractBinLevel(message) > 90) {
+                    if (message.contains("Don't put any") &&
+                        message.contains('90%')) {
                       messageColor = Color.fromARGB(255, 255, 0, 0);
                     } else if (message.contains("You can add") &&
-                        _extractBinLevel(message) < 50) {
+                        message.contains('50%')) {
                       messageColor = const Color.fromARGB(255, 2, 254, 14);
                     } else {
-                      messageColor = Color.fromARGB(255, 255, 0, 0);
+                      messageColor = Color.fromARGB(255, 44, 156, 61);
                     }
 
                     return Padding(

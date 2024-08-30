@@ -2,6 +2,7 @@ import 'package:eco_bin_original/Features/NotificationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() {
   runApp(const GarbageshowingMap());
@@ -21,55 +22,45 @@ class GarbageshowingMap extends StatefulWidget {
 }
 
 class _GarbageshowingMapState extends State<GarbageshowingMap> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  // late Stream<QuerySnapshot> _stream;
+
   static const LatLng _pGooglePlex =
       LatLng(7.1280940356164715, 79.88128287742241);
-  static const LatLng _GarbageLocation1 =
-      LatLng(7.131708950802051, 79.88039606539519);
-  static const LatLng _GarbageLocation2 =
-      LatLng(7.131945323570431, 79.87612478326228);
-  static const LatLng _GarbageLocation3 =
-      LatLng(7.1284534794369705, 79.87694017478212);
-  static const LatLng _UrbanCouncilLocation =
-      LatLng(7.131298444988958, 79.88100392751002);
-  static const LatLng _Seeduwa = LatLng(7.124156811064787, 79.87597862382015);
-  static const LatLng _Kotugoda = LatLng(7.122999315287511, 79.92372488591329);
-  static const LatLng _Mukalangamuwa =
-      LatLng(7.137730155840432, 79.88328531035395);
+  // static const LatLng _GarbageLocation1 =
+  //     LatLng(7.131708950802051, 79.88039606539519);
+  // static const LatLng _GarbageLocation2 =
+  //     LatLng(7.131945323570431, 79.87612478326228);
+  // static const LatLng _GarbageLocation3 =
+  //     LatLng(7.1284534794369705, 79.87694017478212);
+  // static const LatLng _UrbanCouncilLocation =
+  //     LatLng(7.131298444988958, 79.88100392751002);
+  // static const LatLng _Seeduwa = LatLng(7.124156811064787, 79.87597862382015);
+  // static const LatLng _Kotugoda = LatLng(7.122999315287511, 79.92372488591329);
+  // static const LatLng _Mukalangamuwa =
+  //     LatLng(7.137730155840432, 79.88328531035395);
 
   List<LatLng> polylineCoordinates = [];
   late PolylinePoints polylinePoints;
   GoogleMapController? mapController;
 
-  final Map<String, Map<String, double>> garbageLevels = {
-    'Garbage Location 1': {
-      'Paper': 0.95,
-      'Glass': 0.50,
-      'Organic': 0.98,
-      'Plastic': 0.90,
-    },
-    'Garbage Location 2': {
-      'Paper': 0.85,
-      'Glass': 0.60,
-      'Organic': 0.95,
-      'Plastic': 0.95,
-    },
-    'Garbage Location 3': {
-      'Paper': 0.70,
-      'Glass': 0.40,
-      'Organic': 0.95,
-      'Plastic': 0.95,
-    },
-  };
+  List<_GarbageLocation> garbageLocations = [];
+
+  final Map<String, Map<String, double>> garbageLevels = {};
 
   int notificationCount = 0;
+
+  String? locationName = null;
 
   @override
   void initState() {
     super.initState();
     _updateNotificationCount();
+    _fetchRealTimeData();
   }
 
-  _updateNotificationCount() {
+  void _updateNotificationCount() {
     List<String> messages = _checkGarbageLevels();
     setState(() {
       notificationCount = messages.length;
@@ -169,44 +160,20 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   }
 
   Set<Marker> _createMarkers(BuildContext context) {
-    Set<Marker> markers = {
-      Marker(
-        markerId: MarkerId("_UrbanCouncilLocation"),
+    Set<Marker> markers = {};
+
+    garbageLocations.forEach((garbageLocation) {
+      var location = garbageLocation.location;
+      markers.add(Marker(
+        markerId: MarkerId(garbageLocation.location_id),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        position: _UrbanCouncilLocation,
-        infoWindow: const InfoWindow(title: "Urban Council Location"),
+        position: LatLng(garbageLocation.lat, garbageLocation.lan),
+        infoWindow: InfoWindow(title: location),
         onTap: () {
-          _showGarbageBinsInfo(context, 'Urban Council Location');
+          _showGarbageBinsInfo(context, location);
         },
-      ),
-      Marker(
-        markerId: MarkerId("_garbageLocation1"),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        position: _GarbageLocation1,
-        infoWindow: const InfoWindow(title: "Garbage Location 1"),
-        onTap: () {
-          _showGarbageBinsInfo(context, 'Garbage Location 1');
-        },
-      ),
-      Marker(
-        markerId: MarkerId("_garbageLocation2"),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        position: _GarbageLocation2,
-        infoWindow: const InfoWindow(title: "Garbage Location 2"),
-        onTap: () {
-          _showGarbageBinsInfo(context, 'Garbage Location 2');
-        },
-      ),
-      Marker(
-        markerId: MarkerId("_garbageLocation3"),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        position: _GarbageLocation3,
-        infoWindow: const InfoWindow(title: "Garbage Location 3"),
-        onTap: () {
-          _showGarbageBinsInfo(context, 'Garbage Location 3');
-        },
-      ),
-    };
+      ));
+    });
 
     if (widget.newLocation != null && widget.newLocationName != null) {
       markers.add(
@@ -226,8 +193,16 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   }
 
   void _showGarbageBinsInfo(BuildContext context, String locationName) {
-    final bins = garbageLevels[locationName];
-    if (bins != null) {
+    // final bins = garbageLevels[locationName];
+    this.locationName = locationName;
+
+    List<_GarbageLocation> filteredLocations = garbageLocations
+        .where((garbageLocation) => garbageLocation.location == locationName)
+        .toList();
+
+    if (filteredLocations.isNotEmpty) {
+      _GarbageLocation garbageLocation = filteredLocations.first;
+
       showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -246,13 +221,14 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                _buildGarbageBinInfo('Paper', bins['Paper'] ?? 0.0, Colors.red),
                 _buildGarbageBinInfo(
-                    'Glass', bins['Glass'] ?? 0.0, Colors.blue),
+                    'Paper', garbageLocation.paper ?? 0.0, Colors.red),
                 _buildGarbageBinInfo(
-                    'Organic', bins['Organic'] ?? 0.0, Colors.green),
-                _buildGarbageBinInfo('Plastic', bins['Plastic'] ?? 0.0,
-                    const Color.fromARGB(255, 255, 15, 7)),
+                    'Glass', garbageLocation.glass ?? 0.0, Colors.blue),
+                _buildGarbageBinInfo(
+                    'Organic', garbageLocation.organic ?? 0.0, Colors.green),
+                _buildGarbageBinInfo('Plastic', garbageLocation.plastic ?? 0.0,
+                    Color.fromARGB(255, 206, 212, 33)),
               ],
             ),
           );
@@ -313,20 +289,123 @@ class _GarbageshowingMapState extends State<GarbageshowingMap> {
   List<String> _checkGarbageLevels() {
     List<String> messages = [];
 
-    garbageLevels.forEach((location, bins) {
-      bins.forEach((bin, level) {
-        if (level >= 0.9) {
-          messages.add("Don't put any $bin garbage in the bin at $location");
-        } else if (level < 0.5) {
-          messages.add("You can add $bin garbage at $location");
-        }
-      });
-    });
+    for (var location in garbageLocations) {
+      if (location.glass >= 0.9) {
+        messages.add(
+            "Don't put any glass garbage in the bin at ${location.location}");
+      } else if (location.glass < 0.5) {
+        messages.add("You can add glass garbage at ${location.location}");
+      }
+
+      if (location.organic >= 0.9) {
+        messages.add(
+            "Don't put any organic garbage in the bin at ${location.location}");
+      } else if (location.organic < 0.5) {
+        messages.add("You can add organic garbage at ${location.location}");
+      }
+
+      if (location.paper >= 0.9) {
+        messages.add(
+            "Don't put any paper garbage in the bin at ${location.location}");
+      } else if (location.paper < 0.5) {
+        messages.add("You can add paper garbage at ${location.location}");
+      }
+
+      if (location.plastic >= 0.9) {
+        messages.add(
+            "Don't put any plastic garbage in the bin at ${location.location}");
+      } else if (location.plastic < 0.5) {
+        messages.add("You can add plastic garbage at ${location.location}");
+      }
+    }
 
     if (messages.isEmpty) {
-      messages.add("All bins are available for use");
+      messages.add("All bins are in optimal condition.");
     }
 
     return messages;
+  }
+
+  // Separate method for fetching real-time data
+  void _fetchRealTimeData() {
+    _firestore.collection('garbage_locations').snapshots().listen((snapshot) {
+      List<_GarbageLocation> updatedList = [];
+
+      snapshot.docs.forEach((doc) {
+        var garbageLocation =
+            _GarbageLocation.fromJson(doc.data() as Map<String, dynamic>);
+        updatedList.add(garbageLocation);
+      });
+
+      if (mounted) {
+        setState(() {
+          garbageLocations = updatedList;
+          _updateNotificationCount(); // Update notifications after fetching new data
+        });
+
+        if (locationName != null) {
+          Navigator.pop(context);
+          _showGarbageBinsInfo(context, locationName!);
+        }
+      }
+    });
+  }
+}
+
+class _GarbageLocation {
+  late String location_id;
+  late String location;
+  late double glass;
+  late double organic;
+  late double paper;
+  late double plastic;
+  late double lat;
+  late double lan;
+
+  _GarbageLocation({
+    required this.location_id,
+    required this.location,
+    required this.glass,
+    required this.organic,
+    required this.paper,
+    required this.plastic,
+    required this.lat,
+    required this.lan,
+  });
+
+  // Factory constructor to create an instance from a JSON map
+  factory _GarbageLocation.fromJson(Map<String, dynamic> json) {
+    return _GarbageLocation(
+      location_id:
+          json['location_id'] ?? 'unknown', // Provide a default or empty string
+      location: json['location'] ??
+          'Unknown Location', // Provide a default or empty string
+      glass: (json['glass'] ?? 0.0)
+          .toDouble(), // Use default value and ensure it is double
+      organic: (json['organic'] ?? 0.0)
+          .toDouble(), // Use default value and ensure it is double
+      paper: (json['paper'] ?? 0.0)
+          .toDouble(), // Use default value and ensure it is double
+      plastic: (json['plastic'] ?? 0.0)
+          .toDouble(), // Use default value and ensure it is double
+      lat: (json['lat'] ?? 0.0)
+          .toDouble(), // Use default value and ensure it is double
+      lan: (json['lan'] ?? 0.0)
+          .toDouble(), // Use default value and ensure it is double
+    );
+  }
+
+  // Method to convert an instance to a JSON map
+  Map<String, dynamic> toJson() {
+    return {
+      'location_id': location_id,
+      'location': location,
+      'glass': glass,
+      'organic': organic,
+      'paper': paper,
+      'plastic': plastic,
+      'lat': lat,
+      'lan': lan,
+    };
   }
 }
